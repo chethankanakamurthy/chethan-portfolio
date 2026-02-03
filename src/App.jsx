@@ -37,7 +37,7 @@ const App = () => {
   // Folder path: public/Photos/Dances Of India/
   // Updated with .JPG extension as per your local files
   const dancePhotos = [
-    "dance1.JPG", "dance2.JPG", "dance3.JPG"
+    "dance1.JPG", "dance2.JPG", "dance3.JPG", "dance4.JPG", "dance5.JPG", "dance6.JPG"
   ];
 
   useEffect(() => {
