@@ -174,29 +174,33 @@ const App = () => {
       <main className="relative z-10 pt-20">
         {activeTab === 'home' && !selectedProject && (
           <div className="animate-in fade-in duration-700">
-            {/* HERO */}
+            {/* HERO - UPDATED FOR INTERNSHIP/CO-OP SEEKING */}
             <section className="max-w-7xl mx-auto px-6 py-24 md:py-48">
               <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 items-center">
                 <div className="lg:col-span-8 reveal">
                   <span className="inline-block px-3 py-1 rounded bg-red-600/10 text-red-500 border border-red-600/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10">
-                    System Node: Active graduate
+                    Seeking Summer / Fall 2026 Internships & Co-ops
                   </span>
                   <h2 className="text-6xl md:text-9xl font-bold text-white mb-10 leading-[0.95] tracking-tight uppercase italic">
-                    Engineering <br /><span className="text-red-600 not-italic font-black">Resilience.</span>
+                    Engineering <br /><span className="text-red-600 not-italic font-black">the Future.</span>
                   </h2>
                   <p className="max-w-2xl text-2xl text-slate-400 mb-14 leading-relaxed font-medium">
-                    Designing mechanical systems where kinematic complexity meets mass-production reality. Focused on high-performance reliability.
+                    Master's candidate at Michigan Tech with 3 years of industrial experience at Allegion. 
+                    Actively seeking roles to contribute technical rigor in mechanical design and manufacturing.
                   </p>
                   <div className="flex flex-wrap gap-8">
                     <button 
                       onClick={() => setActiveTab('portfolio')}
                       className="px-12 py-5 bg-red-600 text-white font-black uppercase tracking-widest text-[11px] rounded-sm hover:bg-red-700 transition-all shadow-2xl shadow-red-900/30"
                     >
-                      Initialize Archive <ArrowRight size={16} className="inline ml-2" />
+                      View Technical Record <ArrowRight size={16} className="inline ml-2" />
                     </button>
                     <div className="flex gap-4 items-center">
                        <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-red-600 hover:text-white transition-all"><Instagram size={22} /></a>
                     </div>
+                  </div>
+                  <div className="mt-12 flex items-center gap-4 text-slate-500 uppercase tracking-[0.4em] text-[10px] font-bold">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div> Available for Relocation
                   </div>
                 </div>
 
@@ -266,7 +270,7 @@ const App = () => {
         {/* PROJECTS SECTION */}
         {activeTab === 'portfolio' && !selectedProject && (
           <section className="max-w-7xl mx-auto px-6 py-24">
-            <h2 className="text-5xl font-black text-white mb-20 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2 reveal">Projects</h2>
+            <h2 className="text-5xl font-black text-white mb-20 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2 reveal">Records</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
               {projects.map((project, i) => (
                 <div 
@@ -373,7 +377,7 @@ const App = () => {
                      "Leveraged ERP systems for Zion (Wave 1/2) and Project Martha, achieving 95% on-time delivery and $300K savings in Phase 1.",
                      "Improved product reliability through kinematic studies, advanced GD&T application, and tolerance stack-up analysis.",
                      "Enhanced security and innovation by researching competitor products and patents, contributing to new technical disclosures.",
-                     "Streamlined procurement by handling RFQs, supplier quotations, and rigorous documentation for prototypes."
+                     "Streamlined procurement by handling RFQs, supplier quotations, and documentation for prototypes."
                    ]
                  },
                  { 
@@ -525,9 +529,27 @@ const App = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-24">
-               <h4 className="text-7xl md:text-[10rem] font-black text-white tracking-tighter italic leading-none opacity-90 uppercase">Systems.</h4>
-               <div className="w-40 h-1 bg-red-600 rounded-full shadow-[0_0_40px_rgba(220,38,38,0.8)]"></div>
+            <div className="flex flex-col items-center gap-16">
+              <span className="text-[10px] font-bold text-red-500 uppercase tracking-[0.6em]">Quote</span>
+              <div className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto px-6">
+                <div className="relative shrink-0">
+                  <img 
+                    src="/Photos/steve.jpeg" 
+                    className="w-32 h-32 rounded-full border-4 border-red-600/30 object-cover grayscale contrast-125 shadow-2xl" 
+                    alt="Steve Jobs"
+                  />
+                  <div className="absolute inset-0 rounded-full border border-red-600 animate-pulse opacity-50"></div>
+                </div>
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                  <h4 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[1.1] italic uppercase">
+                    "Creativity is just <br className="hidden md:block" /> connecting things."
+                  </h4>
+                  <p className="text-red-500 font-mono text-xs mt-6 uppercase tracking-[0.4em] font-bold">
+                    — Steve Jobs
+                  </p>
+                </div>
+              </div>
+              <div className="w-40 h-1 bg-red-600 rounded-full shadow-[0_0_40px_rgba(220,38,38,0.8)] mt-8"></div>
             </div>
           )}
           
