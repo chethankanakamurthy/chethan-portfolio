@@ -1,48 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  User, 
-  Briefcase, 
-  FileText, 
-  Mail, 
-  Linkedin, 
-  Instagram,
-  MapPin, 
-  ExternalLink, 
-  ChevronRight, 
-  Award, 
-  Settings, 
-  Cpu, 
-  Camera, 
-  Menu, 
-  X,
-  ChevronLeft,
-  ArrowRight,
-  Zap,
-  Target,
-  ShieldCheck,
-  Image as ImageIcon
+  User, Briefcase, FileText, Mail, Linkedin, Instagram,
+  ChevronRight, Award, Settings, Cpu, Camera, Menu, X,
+  ChevronLeft, ArrowRight, Zap, Target, ShieldCheck,
+  Maximize2, Download, ExternalLink, PenTool, Layers,
+  ChevronDown
 } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isAllegionExpanded, setIsAllegionExpanded] = useState(false);
+  const [isBullworkExpanded, setIsBullworkExpanded] = useState(false);
 
   // --- PHOTOGRAPHY CONFIGURATION ---
-  // Folder path: public/Photos/
   const generalPhotos = [
     "photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg"
   ];
 
-  // Folder path: public/Photos/Dances Of India/
-  // Updated with .JPG extension as per your local files
   const dancePhotos = [
-    "dance1.JPG", "dance2.JPG", "dance3.JPG", "dance4.JPG", "dance5.JPG", "dance6.JPG"
+    "dance1.JPG", "dance2.JPG", "dance3.JPG"
   ];
 
+  // Scroll reveal animations logic
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [activeTab, selectedProject]);
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+        }
+      });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach(el => observer.observe(el));
+    
+    // Refresh observer when tabs change or dropdowns open
+    return () => observer.disconnect();
+  }, [activeTab, selectedProject, isAllegionExpanded, isBullworkExpanded]);
 
   const projects = [
     {
@@ -50,242 +48,243 @@ const App = () => {
       title: "Motion Multiplication Mechanism",
       subtitle: "Life-Safety Hardware | Best Innovation Award",
       image: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&q=80&w=800",
-      context: "Existing exit devices provided ~1\" of latch engagement. Under hurricane/tornado conditions, this caused unlatching due to door deflection. The challenge was to double engagement without changing the product form factor.",
-      role: [
-        "Concept Generation & Mechanism Design",
-        "Motion Multiplication Strategy",
-        "Kinematic Reasoning & Packaging Optimization",
-        "DFM-aware Design Thinking"
-      ],
-      mechanism: "A cam-driven mechanism was designed to transform limited input motion into 2\" of linear travel. The cam profile was optimized for smooth actuation while maintaining existing ergonomics.",
+      context: "Existing exit devices provided ~1\" of latch engagement. Under hurricane/tornado conditions, this caused unlatching due to door deflection. My design doubled this to 2\" within the same footprint.",
+      role: ["Concept Generation", "Kinematic Analysis", "DFM-aware Design"],
+      mechanism: "A cam-driven mechanism was engineered to transform limited push-bar motion into 2\" of linear travel. The profile was optimized for smooth mechanical advantage and durability.",
       results: [
-        "100% Increase in latch engagement (1\" to 2\")",
-        "No change to external form factor or user effort",
-        "Improved resistance to wind-induced unlatching",
-        "Received Allegion's 'Best Innovation Award'"
+        "100% Increase in latch engagement",
+        "Zero unlatching in simulated storm tests",
+        "Allegion Best Innovation Award Winner"
       ],
-      tags: ["Kinematics", "SolidWorks", "Life-Safety"]
+      tags: ["Kinematics", "SolidWorks", "Safety"]
     },
     {
       id: 'deadbolt-design',
       title: "Low Profile Deadbolt",
-      subtitle: "Residential Hardware | Double Crank Mechanism",
+      subtitle: "Residential Security | Double Crank Mechanism",
       image: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
-      context: "Competing with slim-profile urban locks while maintaining Schlage's BHMA Grade 1 security standards. The goal was to fit a heavy-duty mechanism into a 0.5\" housing protrusion.",
-      role: [
-        "Competitive Benchmarking (Schlage vs Kwikset)",
-        "Mechanism Synthesis & Kinematic Analysis",
-        "FEA for BHMA Grade 1 Loads",
-        "Prototyping & Tolerance Analysis"
-      ],
-      mechanism: "A Double Crank Mechanism was selected to translate rotational input into linear motion within a flat plane, allowing the linkage to 'fold' into the thin housing.",
+      context: "Developed a BHMA Grade 1 security lock matching the 0.5\" slim profile of competitors without compromising internal mechanical integrity.",
+      role: ["Competitive Benchmarking", "Mechanism Synthesis", "FEA Analysis"],
+      mechanism: "Utilized a Double Crank Linkage operating on a flat plane, allowing the high-strength mechanism to 'fold' into a thin housing protrusion.",
       results: [
-        "Successfully achieved 0.5-inch profile",
-        "Validated against Grade 1 impact standards",
-        "Integration of full 1-inch throw in compact footprint",
-        "Preserved premium tactile feel and torque requirements"
+        "Achieved 0.5-inch slim profile",
+        "Validated against BHMA Grade 1 standards",
+        "Maintained premium tactile user experience"
       ],
-      tags: ["FEA", "Linkage Synthesis", "Manufacturing"]
+      tags: ["FEA", "Linkage", "Manufacturing"]
     },
     {
       id: 'ag-ev',
-      title: "Self-Driving Ag-EV Concept",
-      subtitle: "Electric Vehicle Drivetrain | Internship Project",
+      title: "Self-Driving Ag-EV Drivetrain",
+      subtitle: "Electric Vehicle | Structural Optimization",
       image: "https://images.unsplash.com/photo-1530268576341-94943f65600c?auto=format&fit=crop&q=80&w=800",
-      context: "Development of an autonomous agricultural vehicle concept to optimize farm efficiency and sustainability.",
-      role: [
-        "Gearbox Design & Optimization",
-        "Structural Analysis of Chassis & Roll Cage",
-        "Industrial Design Collaboration",
-        "SolidWorks Modeling"
-      ],
-      mechanism: "Optimized drivetrain performance through custom gear ratios and conducted FEA on the roll cage to ensure operator safety during maneuvers.",
+      context: "Concept development for an autonomous agricultural vehicle drivetrain, focusing on efficiency and safety.",
+      role: ["Gearbox Optimization", "Structural FEA", "Chassis Design"],
+      mechanism: "Optimized drivetrain performance through custom gear ratios and conducted structural FEA on the roll cage to ensure operator safety during heavy maneuvers.",
       results: [
-        "Optimized gearbox efficiency",
-        "Validated structural integrity via FEA",
-        "Aesthetic and functional integration"
+        "Optimized Gearbox Efficiency",
+        "Validated Structural Integrity",
+        "3D Printed Functional Prototype"
       ],
-      tags: ["Drivetrain", "EV", "SolidWorks"]
+      tags: ["EV", "Drivetrain", "Simcenter"]
     }
   ];
 
   const NavItem = ({ id, label, icon: Icon }) => (
     <button
       onClick={() => { setActiveTab(id); setSelectedProject(null); setIsMenuOpen(false); }}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all cursor-pointer ${
-        activeTab === id && !selectedProject 
-          ? 'bg-yellow-500 text-black font-semibold shadow-lg shadow-yellow-500/20' 
-          : 'text-gray-400 hover:text-white hover:bg-white/10'
+      className={`relative flex items-center gap-2 px-5 py-2 transition-all cursor-pointer group ${
+        activeTab === id && !selectedProject ? 'text-red-500' : 'text-slate-500 hover:text-slate-300'
       }`}
     >
-      <Icon size={18} />
-      <span>{label}</span>
+      <Icon size={14} className={activeTab === id && !selectedProject ? 'text-red-600' : 'text-slate-700'} />
+      <span className="text-[11px] font-bold uppercase tracking-[0.2em]">{label}</span>
+      {activeTab === id && !selectedProject && (
+        <div className="absolute -bottom-1 left-5 right-5 h-[2px] bg-red-600 rounded-full animate-in fade-in duration-500"></div>
+      )}
     </button>
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-yellow-500 selection:text-black">
-      <div className="fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
+    <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
+      {/* Background HUD Accents */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
+        <svg className="absolute top-20 right-[-10%] w-[600px] h-[600px] text-white" viewBox="0 0 100 100">
+           <path fill="currentColor" d="M50 35c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 25c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10zM92.5 45H83.8c-.8-4.1-2.4-7.9-4.8-11.2l6.2-6.2c1-1 1-2.6 0-3.5l-5-5c-1-1-2.6-1-3.5 0l-6.2 6.2c-3.3-2.4-7.1-4-11.2-4.8V11.8c0-1.4-1.1-2.5-2.5-2.5h-7c-1.4 0-2.5 1.1-2.5 2.5v8.7c-4.1.8-7.9 2.4-11.2 4.8l-6.2-6.2c-1-1-2.6-1-3.5 0l-5 5c-1 1-1 2.6 0 3.5l6.2 6.2c-2.4 3.3-4 7.1-4.8 11.2h-8.7c-1.4 0-2.5 1.1-2.5 2.5v7c0 1.4 1.1 2.5 2.5 2.5h8.7c.8 4.1 2.4 7.9 4.8 11.2l-6.2 6.2c-1 1-1 2.6 0 3.5l5 5c1 1 2.6 1 3.5 0l6.2-6.2c3.3 2.4 7.1 4 11.2 4.8v8.7c0 1.4 1.1 2.5 2.5 2.5h7c1.4 0 2.5-1.1 2.5-2.5v-8.7c4.1-.8 7.9-2.4 11.2-4.8l6.2 6.2c1 1 2.6 1 3.5 0l5-5c1-1 1-2.6 0-3.5l-6.2-6.2c2.4-3.3 4-7.1 4.8-11.2h8.7c1.4 0 2.5-1.1 2.5-2.5v-7c0-1.4-1.1-2.5-2.5-2.5z"/>
+        </svg>
+      </div>
 
-      <nav className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-yellow-500 rounded flex items-center justify-center text-black font-bold text-xl">
-              CK
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="font-bold text-lg leading-tight text-white uppercase tracking-tighter">Chethan NK</h1>
-              <p className="text-xs text-yellow-500 font-medium tracking-wide">Mechanical Design Engineer</p>
+      <style>{`
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.2, 1, 0.3, 1); }
+        .reveal-visible { opacity: 1; transform: translateY(0); }
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); }
+      `}</style>
+      
+      <div className="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+      <div className="fixed inset-0 bg-gradient-to-b from-blue-900/10 via-transparent to-red-900/10 pointer-events-none z-0"></div>
+
+      {/* Photography Lightbox */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-500"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button className="absolute top-8 right-8 text-white hover:text-red-500 transition-colors"><X size={32} /></button>
+          <img src={selectedImage} className="max-w-full max-h-[85vh] object-contain border border-white/10 rounded-sm shadow-2xl" alt="Gallery detail" />
+        </div>
+      )}
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-6 cursor-pointer group" onClick={() => { setActiveTab('home'); setSelectedProject(null); }}>
+            <div className="w-10 h-10 bg-red-600 rounded-sm flex items-center justify-center text-white font-black text-xl group-hover:bg-blue-600 transition-colors duration-500">CK</div>
+            <div className="flex flex-col border-l border-white/10 pl-6">
+              <h1 className="font-bold text-lg text-white uppercase tracking-tight leading-none">Chethan Kanakamurthy</h1>
+              <p className="text-[9px] text-blue-400 font-bold uppercase tracking-[0.3em] mt-1">Design Engineer • Michigan Tech</p>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            <NavItem id="home" label="Overview" icon={User} />
-            <NavItem id="portfolio" label="Projects" icon={Settings} />
-            <NavItem id="experience" label="Experience" icon={Briefcase} />
-            <NavItem id="photography" label="Photography" icon={Camera} />
+          <div className="hidden lg:flex items-center gap-4">
+            <NavItem id="home" label="Index" icon={Target} />
+            <NavItem id="portfolio" label="Records" icon={Layers} />
+            <NavItem id="experience" label="Timeline" icon={Briefcase} />
+            <NavItem id="photography" label="Gallery" icon={Camera} />
+            <div className="w-[1px] h-4 bg-white/10 mx-4"></div>
+            <div className="flex gap-4">
+              <a href="mailto:ckanakamurthy@gmail.com" className="text-slate-400 hover:text-red-500 transition-colors"><Mail size={18} /></a>
+              <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="text-slate-400 hover:text-red-500 transition-colors"><Linkedin size={18} /></a>
+            </div>
           </div>
 
-          <button className="md:hidden text-white cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X /> : <Menu />}
+          <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden bg-slate-900 p-6 flex flex-col gap-4 animate-in slide-in-from-top border-b border-white/10">
-            <NavItem id="home" label="Overview" icon={User} />
-            <NavItem id="portfolio" label="Projects" icon={Settings} />
-            <NavItem id="experience" label="Experience" icon={Briefcase} />
-            <NavItem id="photography" label="Photography" icon={Camera} />
-          </div>
-        )}
       </nav>
+
+      {/* Mobile Drawer */}
+      <div className={`fixed inset-0 z-40 bg-[#020617] pt-32 px-8 flex flex-col gap-8 transition-transform duration-500 lg:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <NavItem id="home" label="Index" icon={Target} />
+        <NavItem id="portfolio" label="Records" icon={Layers} />
+        <NavItem id="experience" label="Timeline" icon={Briefcase} />
+        <NavItem id="photography" label="Gallery" icon={Camera} />
+      </div>
 
       <main className="relative z-10 pt-20">
         {activeTab === 'home' && !selectedProject && (
           <div className="animate-in fade-in duration-700">
-            <section className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-              <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-12 items-center">
-                <div className="lg:col-span-8">
-                  <span className="inline-block px-3 py-1 rounded bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-xs font-bold uppercase tracking-widest mb-6">
-                    MS Mechanical Engineering @ Michigan Tech
+            {/* HERO */}
+            <section className="max-w-7xl mx-auto px-6 py-24 md:py-48">
+              <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 items-center">
+                <div className="lg:col-span-8 reveal">
+                  <span className="inline-block px-3 py-1 rounded bg-red-600/10 text-red-500 border border-red-600/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10">
+                    System Node: Active graduate
                   </span>
-                  <h2 className="text-4xl md:text-7xl font-black text-white mb-6 leading-[0.9] tracking-tighter uppercase italic">
-                    Designing Systems for <br /><span className="text-yellow-500 underline decoration-4 underline-offset-8">Real-World</span> Impact.
+                  <h2 className="text-6xl md:text-9xl font-bold text-white mb-10 leading-[0.95] tracking-tight uppercase italic">
+                    Engineering <br /><span className="text-red-600 not-italic font-black">Resilience.</span>
                   </h2>
-                  <p className="max-w-2xl text-xl text-slate-400 mb-8 leading-relaxed">
-                    Building strong fundamentals in product design and system-level thinking.
-                    Focused on bridging engineering excellence with manufacturing scalability.
+                  <p className="max-w-2xl text-2xl text-slate-400 mb-14 leading-relaxed font-medium">
+                    Designing mechanical systems where kinematic complexity meets mass-production reality. Focused on high-performance reliability.
                   </p>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-8">
                     <button 
                       onClick={() => setActiveTab('portfolio')}
-                      className="px-8 py-4 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400 transition-colors flex items-center gap-2 cursor-pointer shadow-lg shadow-yellow-500/20"
+                      className="px-12 py-5 bg-red-600 text-white font-black uppercase tracking-widest text-[11px] rounded-sm hover:bg-red-700 transition-all shadow-2xl shadow-red-900/30"
                     >
-                      View Project Portfolio <ArrowRight size={20} />
+                      Initialize Archive <ArrowRight size={16} className="inline ml-2" />
                     </button>
-                    <div className="flex gap-2">
-                      <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Linkedin size={20} /></a>
-                      <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Instagram size={20} /></a>
-                      <a href="mailto:ckanakamurthy@gmail.com" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Mail size={20} /></a>
+                    <div className="flex gap-4 items-center">
+                       <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-red-600 hover:text-white transition-all"><Instagram size={22} /></a>
                     </div>
                   </div>
                 </div>
 
-                <div className="lg:col-span-4 w-full max-w-sm mx-auto lg:max-w-none mb-12 lg:mb-0">
+                <div className="lg:col-span-4 w-full reveal" style={{ transitionDelay: '200ms' }}>
                   <div className="relative group">
-                    <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-yellow-500"></div>
-                    <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-yellow-500 opacity-20 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="aspect-[4/5] bg-slate-900 border border-white/10 overflow-hidden transition-all duration-700 shadow-2xl">
+                    <div className="aspect-[4/5] bg-slate-900 border border-white/5 overflow-hidden relative shadow-2xl rounded-sm">
                       <img 
                         src="/profile.jpg" 
-                        alt="Chethan Nittur Kanakamurthy" 
-                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                        onError={(e) => {
-                          e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800";
-                        }}
+                        alt="Chethan Portrait" 
+                        className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+                        onError={(e) => e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"}
                       />
+                      <div className="absolute inset-0 bg-red-900/10 mix-blend-overlay"></div>
                     </div>
+                    <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-red-600 opacity-40"></div>
+                    <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-red-600 opacity-40"></div>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section className="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-20 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <div className="w-8 h-[2px] bg-yellow-500"></div> Executive Vision
-                </h3>
-                <p className="text-lg text-slate-300 leading-relaxed italic border-l-4 border-yellow-500/30 pl-6">
-                  "I am mastering engineering as the foundation for future leadership. My goal is to bridge the gap between complex engineering, manufacturing excellence, and supply chain operations to lead organizations that create world-class, reliable products."
-                </p>
-                <div className="mt-12 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
-                  <div>
-                    <h4 className="text-white font-bold text-3xl">$300K</h4>
-                    <p className="text-slate-500 text-sm uppercase tracking-wider font-bold">Procurement Savings</p>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold text-3xl">95%</h4>
-                    <p className="text-slate-500 text-sm uppercase tracking-wider font-bold">On-Time Delivery</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-6">Technical Domains</h3>
-                <div className="space-y-4">
+            {/* STRENGTHS */}
+            <section className="bg-white/[0.02] border-y border-white/5 py-24">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.6em] mb-16 text-center reveal">Clifton Strengths Profile</div>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-12 text-center">
                   {[
-                    { label: "3D CAD & GD&T", val: "SolidWorks, Creo, Tolerance Stack-up", icon: Settings },
-                    { label: "Simulation & FEA", val: "Ansys, Simcenter Amesim, MATLAB", icon: Cpu },
-                    { label: "Manufacturing Processes", val: "Die Casting, Sheet Metal, PDC, PM", icon: Briefcase },
-                    { label: "Project Leadership", val: "Innovation Lead, Global Coordination", icon: Award }
-                  ].map((skill, i) => (
-                    <div key={i} className="p-4 bg-white/5 rounded-lg border border-white/5 flex gap-4 items-start group hover:border-yellow-500/30 transition-all hover:bg-white/[0.08]">
-                      <div className="p-2 bg-yellow-500/10 text-yellow-500 rounded group-hover:bg-yellow-500 group-hover:text-black transition-colors"><skill.icon size={20} /></div>
-                      <div>
-                        <h5 className="font-bold text-white leading-none mb-1 uppercase tracking-tight">{skill.label}</h5>
-                        <p className="text-slate-500 text-sm">{skill.val}</p>
-                      </div>
+                    "Strategic", "Responsibility", "Analytical", "Learner", "Futuristic"
+                  ].map((strength, i) => (
+                    <div key={i} className="reveal group" style={{ transitionDelay: `${i * 100}ms` }}>
+                      <div className="text-red-500 mb-6 flex justify-center"><Target size={24} /></div>
+                      <h3 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase italic">{strength}</h3>
+                      <div className="w-1 h-1 bg-blue-500 rounded-full mx-auto mt-6 group-hover:scale-[6] transition-all"></div>
                     </div>
                   ))}
                 </div>
               </div>
             </section>
+
+            {/* DOMAINS */}
+            <section className="max-w-7xl mx-auto px-6 py-32">
+              <div className="grid md:grid-cols-3 gap-12">
+                {[
+                  { title: "Analysis", icon: Cpu, skills: ["Simcenter Amesim", "MATLAB", "FEA (Ansys)"] },
+                  { title: "Design", icon: PenTool, skills: ["SolidWorks Mastery", "PTC Creo", "GD&T Application"] },
+                  { title: "Industrial", icon: Settings, skills: ["Die Casting", "Sheet Metal DFM", "Metallurgy"] }
+                ].map((group, i) => (
+                  <div key={i} className="p-10 bg-white/[0.01] border border-white/5 hover:border-red-600/30 transition-all reveal group shadow-sm" style={{ transitionDelay: `${i * 150}ms` }}>
+                    <div className="w-12 h-12 bg-red-600/10 text-red-500 flex items-center justify-center rounded-sm mb-10 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                      <group.icon size={22} />
+                    </div>
+                    <h5 className="text-xl font-bold text-white uppercase tracking-tight mb-8">{group.title}</h5>
+                    <ul className="space-y-4">
+                      {group.skills.map(s => (
+                        <li key={s} className="flex items-center gap-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest group-hover:text-slate-300">
+                          <div className="w-1.5 h-[1px] bg-red-600"></div> {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         )}
 
+        {/* PROJECTS SECTION */}
         {activeTab === 'portfolio' && !selectedProject && (
-          <section className="max-w-6xl mx-auto px-6 py-20 animate-in fade-in duration-500">
-            <div className="mb-16">
-              <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tight italic">Engineering Records</h2>
-              <p className="text-slate-400 max-w-2xl text-lg">
-                Technical archives detailing mechanical systems development, design validation, and manufacturing optimization.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
+          <section className="max-w-7xl mx-auto px-6 py-24">
+            <h2 className="text-5xl font-black text-white mb-20 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2 reveal">Projects</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {projects.map((project, i) => (
                 <div 
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
-                  className="group bg-slate-900 rounded-xl overflow-hidden border border-white/5 hover:border-yellow-500/50 transition-all cursor-pointer flex flex-col h-full shadow-lg"
+                  className="group bg-slate-900 border border-white/5 overflow-hidden cursor-pointer hover:border-red-600/40 transition-all flex flex-col reveal shadow-2xl"
+                  style={{ transitionDelay: `${i * 100}ms` }}
                 >
-                  <div className="h-52 overflow-hidden relative">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-100" />
-                    <div className="absolute top-4 left-4 flex gap-1">
-                      {project.tags.slice(0, 2).map(t => (
-                        <span key={t} className="px-2 py-0.5 bg-yellow-500 text-black text-[10px] font-bold uppercase rounded">{t}</span>
-                      ))}
-                    </div>
+                  <div className="h-72 overflow-hidden relative">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-all duration-1000 grayscale group-hover:grayscale-0" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent"></div>
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-yellow-500 transition-colors uppercase tracking-tight">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-400 text-sm mb-6 flex-grow line-clamp-2">{project.subtitle}</p>
-                    <button className="flex items-center gap-2 text-yellow-500 text-sm font-bold uppercase tracking-wider group-hover:gap-4 transition-all">
-                      Read Technical Case <ChevronRight size={16} />
-                    </button>
+                  <div className="p-12">
+                    <h3 className="text-2xl font-bold text-white mb-4 leading-none uppercase tracking-tight group-hover:text-red-500 transition-colors">{project.title}</h3>
+                    <p className="text-[10px] text-blue-400 uppercase font-bold tracking-widest leading-loose mb-10 italic">"{project.subtitle}"</p>
+                    <div className="flex items-center gap-3 text-red-500 text-[10px] font-black uppercase tracking-[0.3em] group-hover:translate-x-4 transition-transform">
+                      Open Log <ArrowRight size={14} />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -293,209 +292,257 @@ const App = () => {
           </section>
         )}
 
+        {/* PROJECT DETAIL */}
         {selectedProject && (
-          <div className="animate-in slide-in-from-right duration-500">
-            <div className="bg-slate-900 border-b border-white/10 py-16">
-              <div className="max-w-4xl mx-auto px-6 text-center md:text-left">
-                <button 
-                  onClick={() => setSelectedProject(null)}
-                  className="flex items-center gap-2 text-slate-500 hover:text-white mb-8 transition-colors cursor-pointer uppercase text-xs font-bold tracking-widest mx-auto md:mx-0 group"
-                >
-                  <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" /> Back to Records
+          <div className="animate-in slide-in-from-right duration-700 pb-32">
+            <div className="bg-[#020617] border-b border-white/5 py-32">
+              <div className="max-w-5xl mx-auto px-6">
+                <button onClick={() => setSelectedProject(null)} className="flex items-center gap-4 text-slate-500 hover:text-white mb-16 uppercase font-black text-[10px] tracking-widest group">
+                  <ChevronLeft size={16} className="group-hover:-translate-x-2 transition-transform text-red-600" /> Return to Index
                 </button>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-4 uppercase tracking-tight leading-none italic">{selectedProject.title}</h2>
-                <p className="text-xl text-yellow-500 font-bold uppercase tracking-widest border-l-4 border-yellow-500 pl-4 inline-block">{selectedProject.subtitle}</p>
+                <h2 className="text-6xl md:text-9xl font-black text-white mb-10 tracking-tighter uppercase italic leading-[0.9]">{selectedProject.title}</h2>
+                <div className="px-8 py-3 bg-red-600 text-white font-black uppercase tracking-[0.2em] text-[11px] w-fit shadow-lg shadow-red-900/20">Ref: {selectedProject.id.toUpperCase()}</div>
               </div>
             </div>
 
-            <div className="max-w-4xl mx-auto px-6 py-16 space-y-24">
-              <div className="grid md:grid-cols-3 gap-12">
-                <div className="md:col-span-2 space-y-12">
-                  <section>
-                    <h4 className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Problem Scope</h4>
-                    <p className="text-lg text-slate-300 leading-relaxed font-medium italic border-l-2 border-white/10 pl-6">"{selectedProject.context}"</p>
-                  </section>
-
-                  <section>
-                    <h4 className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Mechanism Synthesis</h4>
-                    <p className="text-lg text-slate-300 leading-relaxed">{selectedProject.mechanism}</p>
-                    <div className="mt-8 rounded-xl overflow-hidden border border-white/10 bg-black aspect-video flex items-center justify-center text-slate-600 relative">
-                       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-                      <p className="italic text-xs font-black uppercase tracking-[0.5em] z-10">[ CAD VISUALIZATION ARCHIVE ]</p>
-                    </div>
-                  </section>
-                </div>
-
-                <aside className="space-y-12">
-                  <section className="p-6 bg-white/[0.02] border border-white/5 rounded-xl">
-                    <h4 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-6">Key Roles</h4>
-                    <ul className="space-y-4">
-                      {selectedProject.role.map((r, i) => (
-                        <li key={i} className="flex gap-3 text-sm text-slate-400 font-medium">
-                          <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-1.5 shrink-0"></div>
-                          {r}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-xl shadow-xl shadow-black/20">
-                    <h4 className="text-xs font-black text-yellow-500 uppercase tracking-[0.2em] mb-6">Results & Impact</h4>
-                    <ul className="space-y-4">
-                      {selectedProject.results.map((res, i) => (
-                        <li key={i} className="flex gap-3 text-sm text-white font-bold italic tracking-tight leading-tight">
-                          <div className="p-1 bg-yellow-500 text-black rounded h-fit shrink-0 mt-0.5"><Award size={12} /></div>
-                          {res}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                </aside>
-              </div>
+            <div className="max-w-5xl mx-auto px-6 py-24 space-y-40">
+               <div className="grid md:grid-cols-12 gap-24">
+                  <div className="md:col-span-8 space-y-32">
+                     <section className="reveal">
+                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.6em] flex items-center gap-6 mb-12">
+                           <div className="w-12 h-[1px] bg-red-600"></div> Challenge
+                        </h4>
+                        <p className="text-4xl text-slate-300 leading-[1.3] font-medium italic border-l-4 border-blue-600/30 pl-10">"{selectedProject.context}"</p>
+                     </section>
+                     <section className="reveal">
+                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.6em] flex items-center gap-6 mb-12">
+                           <div className="w-10 h-[1px] bg-red-600"></div> Engineering Solution
+                        </h4>
+                        <p className="text-xl text-slate-400 leading-relaxed font-light">{selectedProject.mechanism}</p>
+                     </section>
+                  </div>
+                  <aside className="md:col-span-4 space-y-20">
+                     <section className="p-12 bg-red-600/[0.03] border border-red-600/10 space-y-12 reveal">
+                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.5em]">Validation</h4>
+                        <ul className="space-y-10">
+                           {selectedProject.results.map((res, i) => (
+                              <li key={i} className="flex gap-6 text-[11px] text-white font-bold uppercase tracking-widest leading-tight italic">
+                                 <div className="w-8 h-8 bg-red-600 flex items-center justify-center shrink-0 shadow-lg"><Award size={14} /></div>
+                                 <span className="mt-1">{res}</span>
+                              </li>
+                           ))}
+                        </ul>
+                     </section>
+                  </aside>
+               </div>
             </div>
           </div>
         )}
 
+        {/* EXPERIENCE TIMELINE */}
         {activeTab === 'experience' && (
-          <section className="max-w-4xl mx-auto px-6 py-20 animate-in fade-in duration-500">
-             <div className="mb-16">
-              <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tight italic">Professional History</h2>
-              <p className="text-slate-400 text-lg">Chronological record of technical impact and manufacturing optimization.</p>
+          <section className="max-w-5xl mx-auto px-6 py-32">
+             <div className="mb-32 reveal">
+              <h2 className="text-6xl md:text-8xl font-black text-white mb-10 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Timeline.</h2>
+              <p className="text-slate-400 text-xl font-medium mt-10">Industrial footprint and academic evolution from 2017 to Present.</p>
             </div>
 
-            <div className="space-y-16 border-l border-white/10 ml-4 pl-12 relative">
-              <div className="relative group">
-                <div className="absolute -left-[56px] top-0 w-8 h-8 bg-yellow-500 rounded-full border-4 border-slate-950 flex items-center justify-center shadow-[0_0_20px_rgba(234,179,8,0.5)]">
-                  <Award size={14} className="text-black" />
-                </div>
-                <span className="text-yellow-500 font-bold text-sm uppercase tracking-widest">2025 — Present</span>
-                <h3 className="text-3xl font-black text-white mt-2 group-hover:text-yellow-500 transition-colors tracking-tight italic">MS Mechanical Engineering</h3>
-                <p className="text-slate-400 font-medium italic text-lg">Michigan Technological University</p>
-              </div>
+            <div className="space-y-52 relative border-l-2 border-white/5 ml-4 pl-20">
+               {[
+                 { 
+                   id: 'mtu',
+                   date: "2025 — PRESENT", 
+                   org: "Michigan Technological University",
+                   title: "Master's in Mechanical Engineering", 
+                   logo: "/Logos/mtu.png", 
+                   current: true,
+                   sub: "Learnt Engineering by not eating Masala Dosa."
+                 },
+                 { 
+                   id: 'allegion',
+                   date: "2022 — 2025", 
+                   title: "Associate Mechanical Engineer", 
+                   org: "Allegion India", 
+                   logo: "/Logos/allegion.png",
+                   sub: "Drove mechanical innovation and localization achieving $300K savings.",
+                   isExpanded: isAllegionExpanded,
+                   setExpanded: setIsAllegionExpanded,
+                   details: [
+                     "Engineered mechanical lock mechanisms and deadbolt latches with 100% compliance to BHMA and industry standards.",
+                     "Spearheaded localization efforts as part of the core team for the 'India for India' project, reducing dependency on imports and improving supply resilience.",
+                     "Leveraged ERP systems for Zion (Wave 1/2) and Project Martha, achieving 95% on-time delivery and $300K savings in Phase 1.",
+                     "Improved product reliability through kinematic studies, advanced GD&T application, and tolerance stack-up analysis.",
+                     "Enhanced security and innovation by researching competitor products and patents, contributing to new technical disclosures.",
+                     "Streamlined procurement by handling RFQs, supplier quotations, and rigorous documentation for prototypes."
+                   ]
+                 },
+                 { 
+                   id: 'bullwork',
+                   date: "2021 — 2021", 
+                   title: "Engineering Intern", 
+                   org: "Bullwork Mobility", 
+                   logo: "/Logos/bullwork.png",
+                   sub: "Optimized Ag-EV drivetrain and chassis structural analysis.",
+                   isExpanded: isBullworkExpanded,
+                   setExpanded: setIsBullworkExpanded,
+                   details: [
+                     "Optimized performance of an electric agricultural vehicle by designing a high-efficiency gearbox tailored for low-speed high-torque applications.",
+                     "Conducted comprehensive structural analysis of the chassis, roll cage, and cabin using SolidWorks Simulation.",
+                     "Collaborated on industrial design initiatives for improved cabin ergonomics and serviceability."
+                   ]
+                 },
+                 { 
+                   id: 'dbit',
+                   date: "2017 — 2021", 
+                   title: "Bachelor's in Mechanical Engineering", 
+                   org: "Don Bosco Institute of Technology, Bangalore", 
+                   logo: "/Logos/dbit.png",
+                   sub: "Learnt Engineering by eating lot of Masala Dosa." 
+                 }
+               ].map((item, i) => (
+                 <div key={i} className="relative reveal" style={{ transitionDelay: `${i * 150}ms` }}>
+                    {/* Node */}
+                    <div className={`absolute -left-[103px] top-1 w-6 h-6 rounded-full border-4 border-[#020617] transition-all duration-700 ${item.current ? 'bg-red-600 shadow-[0_0_25px_rgba(220,38,38,0.7)]' : 'bg-slate-800'}`}></div>
+                    
+                    <span className={`text-[10px] font-bold uppercase tracking-[0.5em] mb-10 block ${item.current ? 'text-red-500' : 'text-slate-600'}`}>{item.date}</span>
+                    
+                    <div className="flex flex-col md:flex-row gap-12 items-start mb-16">
+                      <div className="w-[75px] h-[75px] bg-white rounded-sm flex items-center justify-center p-1 shrink-0 shadow-2xl group overflow-hidden">
+                        <img 
+                          src={item.logo} 
+                          alt={item.org} 
+                          className="max-w-full max-h-full object-contain brightness-100 opacity-100"
+                          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=100" }} 
+                        />
+                      </div>
+                      <div>
+                        <p className="text-blue-400 font-bold uppercase tracking-[0.4em] text-[10px] mb-3 leading-none">{item.org}</p>
+                        <h3 className="text-4xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-tight">{item.title}</h3>
+                      </div>
+                    </div>
 
-              <div className="relative group">
-                <div className="absolute -left-[56px] top-0 w-8 h-8 bg-slate-800 rounded-full border-4 border-slate-950 group-hover:bg-yellow-500/50 transition-colors"></div>
-                <span className="text-slate-500 font-bold text-sm uppercase tracking-widest">July 2022 — July 2025</span>
-                <h3 className="text-3xl font-black text-white mt-2 uppercase tracking-tight italic">Associate Mechanical Engineer</h3>
-                <p className="text-yellow-500 font-medium italic text-lg">Allegion India | Product Development</p>
-                <ul className="mt-6 space-y-6 text-slate-400">
-                  <li className="flex gap-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg group-hover:border-white/20 transition-all">
-                    <Zap size={20} className="text-yellow-500 shrink-0 mt-1" />
-                    <span className="text-lg leading-relaxed">Drove localization efforts for \"India for India\" project, achieving <b>$300K savings</b> in Phase 1 through strategic procurement and DFM.</span>
-                  </li>
-                  <li className="flex gap-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg group-hover:border-white/20 transition-all">
-                    <Zap size={20} className="text-yellow-500 shrink-0 mt-1" />
-                    <span className="text-lg leading-relaxed">Engineered mechanical lock mechanisms and deadbolt latches in compliance with <b>BHMA Grade 1 standards</b>.</span>
-                  </li>
-                  <li className="flex gap-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg group-hover:border-white/20 transition-all">
-                    <Zap size={20} className="text-yellow-500 shrink-0 mt-1" />
-                    <span className="text-lg leading-relaxed">Coordinated global engineering teams to maintain <b>95% on-time delivery</b> across project lifecycle.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="relative group">
-                <div className="absolute -left-[56px] top-0 w-8 h-8 bg-slate-800 rounded-full border-4 border-slate-950 group-hover:bg-yellow-500/50 transition-colors"></div>
-                <span className="text-slate-500 font-bold text-sm uppercase tracking-widest">Aug 2021 — Dec 2021</span>
-                <h3 className="text-3xl font-black text-white mt-2 uppercase tracking-tight italic">Engineering Intern</h3>
-                <p className="text-slate-400 font-medium italic text-lg">Bullwork Mobility | Ag-EV Drivetrain</p>
-                <ul className="mt-4 text-slate-400 space-y-2">
-                  <li className="flex gap-4">
-                    <Zap size={16} className="text-yellow-500 shrink-0 mt-1" />
-                    <span>Optimized electric agricultural vehicle performance and conducted chassis/roll-cage FEA analysis.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="relative group">
-                <div className="absolute -left-[56px] top-0 w-8 h-8 bg-slate-800 rounded-full border-4 border-slate-950 group-hover:bg-yellow-500/50 transition-colors"></div>
-                <span className="text-slate-500 font-bold text-sm uppercase tracking-widest">2017 — 2021</span>
-                <h3 className="text-3xl font-black text-white mt-2 uppercase tracking-tight italic">BE in Mechanical Engineering</h3>
-                <p className="text-slate-400 font-medium italic text-lg">Don Bosco Institute of Technology</p>
-                <p className="mt-2 text-slate-500 text-sm">Bachelor's Degree in Mechanical Engineering - Foundation of technical expertise and engineering principles.</p>
-              </div>
+                    <div className="space-y-10 pl-6 border-l border-white/5 ml-2">
+                        {item.sub && <p className="text-slate-300 text-2xl font-medium leading-relaxed italic opacity-90">"{item.sub}"</p>}
+                        
+                        {item.details && (
+                          <div className="pt-4">
+                            <button 
+                              onClick={() => item.setExpanded(!item.isExpanded)}
+                              className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.5em] text-slate-500 hover:text-white transition-all py-3 px-8 border border-white/10 hover:border-red-600/40 bg-white/[0.01]"
+                            >
+                              Technical Breakdown <ChevronDown size={14} className={`transition-transform duration-700 ${item.isExpanded ? 'rotate-180 text-red-600' : ''}`} />
+                            </button>
+                            
+                            {item.isExpanded && (
+                              <div className="mt-12 space-y-6 animate-in slide-in-from-top-4 duration-700">
+                                {item.details.map((detail, dIdx) => (
+                                  <div key={dIdx} className="flex gap-8 p-8 bg-white/[0.02] border border-white/5 shadow-sm">
+                                    <Zap size={18} className="text-red-600 shrink-0 mt-1" />
+                                    <p className="text-slate-200 text-lg leading-relaxed font-medium">{detail}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                    </div>
+                 </div>
+               ))}
             </div>
           </section>
         )}
 
         {activeTab === 'photography' && (
-          <section className="max-w-6xl mx-auto px-6 py-20 animate-in fade-in duration-500">
-            <div className="mb-16">
-              <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tight italic">Photography</h2>
-              <p className="text-slate-400 max-w-2xl text-lg">
-                Capturing moments beyond the drafting board. A collection of trekking adventures, architectural geometry, and natural landscapes.
-              </p>
-            </div>
+          <section className="relative min-h-screen">
+            {/* Artistic Texture */}
+            <div className="absolute inset-0 z-0 bg-cover bg-fixed bg-center opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: "url('/camera.jpg')" }}></div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617] pointer-events-none"></div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
-              {generalPhotos.map((filename, index) => (
-                <div key={index} className="group relative aspect-square overflow-hidden bg-slate-900 border border-white/5 hover:border-yellow-500/50 transition-all rounded-xl">
-                  <img 
-                    src={`/Photos/${filename}`} 
-                    alt={filename} 
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
-                    onError={(e) => {
-                      e.target.src = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800";
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-16 border-t border-white/10">
-              <div className="mb-12">
-                <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tight italic flex items-center gap-3">
-                  <div className="w-8 h-[2px] bg-yellow-500"></div> Dances Of India
-                </h3>
-                <p className="text-slate-400 max-w-2xl text-lg font-medium italic border-l-2 border-yellow-500/30 pl-6 leading-relaxed">
-                  "This is my personal photography project exploring and taking photographs of different art forms."
+            <div className="relative z-10 max-w-7xl mx-auto px-10 py-48">
+              <div className="mb-48 reveal text-center max-w-4xl mx-auto">
+                <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">Practice.</h2>
+                <p className="text-slate-400 text-3xl font-medium leading-relaxed italic opacity-80 border-x border-white/10 px-14 py-4">
+                  "Photography has been a passion of mine right from my 5th grade, when I first clicked an image from a film camera. 
+                  Today, I use the lens to explore geometry beyond the engineering floor."
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {dancePhotos.map((filename, index) => (
-                  <div key={index} className="group relative aspect-square overflow-hidden bg-slate-900 border border-white/5 hover:border-yellow-500/50 transition-all rounded-xl">
-                    <img 
-                      src={`/Photos/Dances Of India/${filename}`} 
-                      alt={filename} 
-                      className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
-                      onError={(e) => {
-                        e.target.src = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800";
-                      }}
-                    />
+              {/* Dances Of India */}
+              <div className="mb-72 reveal">
+                <div className="mb-32 flex items-center justify-between border-b border-white/5 pb-16">
+                  <h3 className="text-5xl font-black text-white uppercase tracking-tighter italic">Dances Of India</h3>
+                  <div className="flex flex-col items-end gap-2 font-mono text-[9px] text-red-600 uppercase tracking-[0.5em]">
+                    <span>Project_Archive_01</span>
+                    <span>Bengaluru_Series</span>
                   </div>
-                ))}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-24">
+                  {dancePhotos.map((filename, index) => (
+                    <div 
+                      key={index} 
+                      className="group cursor-zoom-in reveal"
+                      style={{ transitionDelay: `${index * 300}ms` }}
+                      onClick={() => setSelectedImage(`/Photos/Dances Of India/${filename}`)}
+                    >
+                      <div className="relative aspect-[3/4] overflow-hidden bg-neutral-900 shadow-2xl mb-8 transition-all duration-1000 group-hover:translate-y-[-10px]">
+                        <img src={`/Photos/Dances Of India/${filename}`} className="w-full h-full object-cover transition-all duration-[3000ms] grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800"} />
+                        <div className="absolute top-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity bg-red-600/30 backdrop-blur-xl p-4 border border-white/20">
+                          <Maximize2 size={20} className="text-white" strokeWidth={2} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* General Visual Log */}
+              <div className="pt-48 border-t border-white/5 reveal">
+                <div className="mb-32"><h3 className="text-5xl font-black text-white uppercase italic tracking-tighter">Visual Log</h3></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-40">
+                  {generalPhotos.map((filename, index) => (
+                    <div key={index} className="group relative aspect-square overflow-hidden bg-neutral-900 transition-all duration-1000 cursor-zoom-in reveal hover:shadow-2xl" onClick={() => setSelectedImage(`/Photos/${filename}`)}>
+                      <img src={`/Photos/${filename}`} className="w-full h-full object-cover transition-all duration-[3000ms] opacity-30 group-hover:opacity-100 group-hover:scale-105" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800"} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
         )}
       </main>
 
-      <footer className="border-t border-white/5 py-24 mt-20 bg-slate-950/80 backdrop-blur-sm relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-          <h4 className="text-3xl font-black text-white mb-6 uppercase tracking-widest italic">Let's Connect</h4>
-          <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium leading-relaxed text-lg">
-            Seeking Mechanical Engineering Internships for Summer 2026. <br /> Based in Houghton, MI.
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 mb-20">
-            <a href="mailto:ckanakamurthy@gmail.com" className="group flex items-center gap-3 text-yellow-500 font-bold border-b-2 border-yellow-500/30 pb-1 hover:text-white hover:border-white transition-all tracking-[0.3em] uppercase text-sm">
-              <Mail size={16} /> Email
-            </a>
-            <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="group flex items-center gap-3 text-yellow-500 font-bold border-b-2 border-yellow-500/30 pb-1 hover:text-white hover:border-white transition-all tracking-[0.3em] uppercase text-sm">
-              <Linkedin size={16} /> LinkedIn
-            </a>
-            <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="group flex items-center gap-3 text-yellow-500 font-bold border-b-2 border-yellow-500/30 pb-1 hover:text-white hover:border-white transition-all tracking-[0.3em] uppercase text-sm">
-              <Instagram size={16} /> Instagram
-            </a>
+      <footer className="border-t border-white/5 py-72 bg-[#020617] text-center px-10 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto reveal">
+          {activeTab === 'photography' ? (
+            <div className="flex flex-col items-center gap-24">
+              <h4 className="text-4xl md:text-7xl font-black text-white tracking-tighter leading-tight max-w-4xl italic opacity-80 uppercase leading-none">This is just the beginning.</h4>
+              <div className="flex flex-col items-center gap-12">
+                <p className="text-blue-400 uppercase tracking-[0.8em] text-[10px] font-bold">Follow Work / Enquiries via DM or Mail</p>
+                <a href="mailto:ckanakamurthy@gmail.com" className="inline-flex items-center gap-10 bg-red-600 text-white font-black text-xl px-24 py-10 transition-all hover:bg-red-700 uppercase tracking-[0.4em] shadow-3xl shadow-red-900/40">
+                  <Mail size={24} strokeWidth={2} /> Enquiry
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-24">
+               <h4 className="text-7xl md:text-[10rem] font-black text-white tracking-tighter italic leading-none opacity-90 uppercase">Systems.</h4>
+               <div className="w-40 h-1 bg-red-600 rounded-full shadow-[0_0_40px_rgba(220,38,38,0.8)]"></div>
+            </div>
+          )}
+          
+          <div className="flex justify-center gap-24 mt-48">
+            {[
+              { href: "mailto:ckanakamurthy@gmail.com", icon: Mail, color: 'hover:text-red-500' },
+              { href: "https://linkedin.com/in/chethan-nk", icon: Linkedin, color: 'hover:text-blue-400' },
+              { href: "https://www.instagram.com/chethan_kanakamurthy/", icon: Instagram, color: 'hover:text-red-400' }
+            ].map((link, lIdx) => (
+              <a key={lIdx} href={link.href} target="_blank" className={`group transition-transform hover:scale-125 duration-500 ${link.color}`}>
+                <link.icon size={28} strokeWidth={1.5} className="text-slate-700 transition-all duration-700" />
+              </a>
+            ))}
           </div>
-          <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40">
-             <p className="text-[10px] text-slate-500 uppercase tracking-[0.6em] font-black">
-               © 2026 Chethan Nittur Kanakamurthy
-             </p>
-             <p className="text-[10px] text-slate-500 uppercase tracking-[0.6em] font-black">
-               Michigan Tech • Mechanical Systems Design
-             </p>
-          </div>
+          <p className="text-[10px] text-slate-700 uppercase tracking-[1em] mt-52 font-bold">© 2026 Chethan Kanakamurthy • Michigan Tech</p>
         </div>
       </footer>
     </div>
