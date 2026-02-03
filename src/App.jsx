@@ -5,6 +5,7 @@ import {
   FileText, 
   Mail, 
   Linkedin, 
+  Instagram,
   MapPin, 
   ExternalLink, 
   ChevronRight, 
@@ -18,7 +19,8 @@ import {
   ArrowRight,
   Zap,
   Target,
-  ShieldCheck
+  ShieldCheck,
+  Image as ImageIcon
 } from 'lucide-react';
 
 const App = () => {
@@ -26,7 +28,18 @@ const App = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Smooth scroll to top on tab change or project selection
+  // --- PHOTOGRAPHY CONFIGURATION ---
+  // Folder path: public/Photos/
+  const generalPhotos = [
+    "photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg"
+  ];
+
+  // Folder path: public/Photos/Dances Of India/
+  // Updated with .JPG extension as per your local files
+  const dancePhotos = [
+    "dance1.JPG", "dance2.JPG", "dance3.JPG"
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [activeTab, selectedProject]);
@@ -112,10 +125,8 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-yellow-500 selection:text-black">
-      {/* Background Grid Overlay */}
       <div className="fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none z-0"></div>
 
-      {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -132,9 +143,10 @@ const App = () => {
             <NavItem id="home" label="Overview" icon={User} />
             <NavItem id="portfolio" label="Projects" icon={Settings} />
             <NavItem id="experience" label="Experience" icon={Briefcase} />
+            <NavItem id="photography" label="Photography" icon={Camera} />
           </div>
 
-          <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-white cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
@@ -144,6 +156,7 @@ const App = () => {
             <NavItem id="home" label="Overview" icon={User} />
             <NavItem id="portfolio" label="Projects" icon={Settings} />
             <NavItem id="experience" label="Experience" icon={Briefcase} />
+            <NavItem id="photography" label="Photography" icon={Camera} />
           </div>
         )}
       </nav>
@@ -172,14 +185,14 @@ const App = () => {
                       View Project Portfolio <ArrowRight size={20} />
                     </button>
                     <div className="flex gap-2">
-                      <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors"><Linkedin size={20} /></a>
-                      <a href="mailto:ckanakamurthy@gmail.com" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors"><Mail size={20} /></a>
+                      <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Linkedin size={20} /></a>
+                      <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Instagram size={20} /></a>
+                      <a href="mailto:ckanakamurthy@gmail.com" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors text-slate-400 hover:text-white"><Mail size={20} /></a>
                     </div>
                   </div>
                 </div>
 
-                {/* Photograph Column - Now visible on all screens */}
-                <div className="lg:col-span-4 w-full max-sm mx-auto lg:max-w-none mb-12 lg:mb-0">
+                <div className="lg:col-span-4 w-full max-w-sm mx-auto lg:max-w-none mb-12 lg:mb-0">
                   <div className="relative group">
                     <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-yellow-500"></div>
                     <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-yellow-500 opacity-20 group-hover:opacity-100 transition-opacity"></div>
@@ -241,7 +254,6 @@ const App = () => {
           </div>
         )}
 
-        {/* PROJECTS LIST */}
         {activeTab === 'portfolio' && !selectedProject && (
           <section className="max-w-6xl mx-auto px-6 py-20 animate-in fade-in duration-500">
             <div className="mb-16">
@@ -281,7 +293,6 @@ const App = () => {
           </section>
         )}
 
-        {/* PROJECT DETAIL */}
         {selectedProject && (
           <div className="animate-in slide-in-from-right duration-500">
             <div className="bg-slate-900 border-b border-white/10 py-16">
@@ -345,12 +356,11 @@ const App = () => {
           </div>
         )}
 
-        {/* EXPERIENCE TIMELINE */}
         {activeTab === 'experience' && (
           <section className="max-w-4xl mx-auto px-6 py-20 animate-in fade-in duration-500">
              <div className="mb-16">
               <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tight italic">Professional History</h2>
-              <p className="text-slate-400 text-lg">Chronological record of technical impact and academic research.</p>
+              <p className="text-slate-400 text-lg">Chronological record of technical impact and manufacturing optimization.</p>
             </div>
 
             <div className="space-y-16 border-l border-white/10 ml-4 pl-12 relative">
@@ -407,6 +417,58 @@ const App = () => {
             </div>
           </section>
         )}
+
+        {activeTab === 'photography' && (
+          <section className="max-w-6xl mx-auto px-6 py-20 animate-in fade-in duration-500">
+            <div className="mb-16">
+              <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tight italic">Photography</h2>
+              <p className="text-slate-400 max-w-2xl text-lg">
+                Capturing moments beyond the drafting board. A collection of trekking adventures, architectural geometry, and natural landscapes.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+              {generalPhotos.map((filename, index) => (
+                <div key={index} className="group relative aspect-square overflow-hidden bg-slate-900 border border-white/5 hover:border-yellow-500/50 transition-all rounded-xl">
+                  <img 
+                    src={`/Photos/${filename}`} 
+                    alt={filename} 
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                    onError={(e) => {
+                      e.target.src = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800";
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-16 border-t border-white/10">
+              <div className="mb-12">
+                <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tight italic flex items-center gap-3">
+                  <div className="w-8 h-[2px] bg-yellow-500"></div> Dances Of India
+                </h3>
+                <p className="text-slate-400 max-w-2xl text-lg font-medium italic border-l-2 border-yellow-500/30 pl-6 leading-relaxed">
+                  "This is my personal photography project exploring and taking photographs of different art forms."
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {dancePhotos.map((filename, index) => (
+                  <div key={index} className="group relative aspect-square overflow-hidden bg-slate-900 border border-white/5 hover:border-yellow-500/50 transition-all rounded-xl">
+                    <img 
+                      src={`/Photos/Dances Of India/${filename}`} 
+                      alt={filename} 
+                      className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                      onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800";
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       <footer className="border-t border-white/5 py-24 mt-20 bg-slate-950/80 backdrop-blur-sm relative overflow-hidden">
@@ -421,6 +483,9 @@ const App = () => {
             </a>
             <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="group flex items-center gap-3 text-yellow-500 font-bold border-b-2 border-yellow-500/30 pb-1 hover:text-white hover:border-white transition-all tracking-[0.3em] uppercase text-sm">
               <Linkedin size={16} /> LinkedIn
+            </a>
+            <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="group flex items-center gap-3 text-yellow-500 font-bold border-b-2 border-yellow-500/30 pb-1 hover:text-white hover:border-white transition-all tracking-[0.3em] uppercase text-sm">
+              <Instagram size={16} /> Instagram
             </a>
           </div>
           <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40">
