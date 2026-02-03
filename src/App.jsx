@@ -464,7 +464,7 @@ const App = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-10 py-48">
               <div className="mb-48 reveal text-center max-w-4xl mx-auto">
-                <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">Practice.</h2>
+                <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">say cheese!!</h2>
                 <p className="text-slate-400 text-3xl font-medium leading-relaxed italic opacity-80 border-x border-white/10 px-14 py-4">
                   "Photography has been a passion of mine right from my 5th grade, when I first clicked an image from a film camera. 
                   Today, I use the lens to explore geometry beyond the engineering floor."
