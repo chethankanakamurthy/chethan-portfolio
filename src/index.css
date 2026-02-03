@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* 🛠 MECHANICAL OVERRIDE - PRODUCTION CSS
+   These styles are hard-coded to ensure your site looks professional
+   immediately, bypassing any local configuration errors.
+*/
+
+:root {
+  --mtu-gold: #ffcd00;
+  --slate-black: #020617;
+  --slate-dark: #0f172a;
+  background-color: var(--slate-black);
+  color: #f8fafc;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--slate-black) !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Force standard classes to work even if Tailwind fails */
+.bg-slate-950 { background-color: var(--slate-black) !important; }
+.bg-slate-900 { background-color: var(--slate-dark) !important; }
+.text-yellow-500 { color: var(--mtu-gold) !important; }
+.bg-yellow-500 { background-color: var(--mtu-gold) !important; }
+.border-yellow-500 { border-color: var(--mtu-gold) !important; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--slate-black); }
+::-webkit-scrollbar-thumb { background: var(--mtu-gold); border-radius: 10px; }
+
+/* Technical Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-technical {
+  animation: fadeIn 0.8s ease-out forwards;
+}
