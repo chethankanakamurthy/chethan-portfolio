@@ -4,7 +4,7 @@ import {
   ChevronRight, Award, Settings, Cpu, Camera, Menu, X,
   ChevronLeft, ArrowRight, Zap, Target, ShieldCheck,
   Maximize2, Download, ExternalLink, PenTool, Layers,
-  ChevronDown
+  ChevronDown, Code
 } from 'lucide-react';
 
 const App = () => {
@@ -122,7 +122,7 @@ const App = () => {
       <div className="fixed inset-0 bg-grid pointer-events-none z-0"></div>
       <div className="fixed inset-0 bg-gradient-to-b from-blue-900/10 via-transparent to-red-900/10 pointer-events-none z-0"></div>
 
-      {/* Photography Lightbox */}
+      {/* Lightbox */}
       {selectedImage && (
         <div 
           className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-500"
@@ -173,7 +173,6 @@ const App = () => {
       <main className="relative z-10 pt-20">
         {activeTab === 'home' && !selectedProject && (
           <div className="animate-in fade-in duration-700">
-            {/* HERO - SEEKING INTERNSHIP/CO-OP */}
             <section className="max-w-7xl mx-auto px-6 py-24 md:py-48">
               <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 items-center">
                 <div className="lg:col-span-8 reveal">
@@ -221,7 +220,6 @@ const App = () => {
               </div>
             </section>
 
-            {/* STRENGTHS */}
             <section className="bg-white/[0.02] border-y border-white/5 py-24">
               <div className="max-w-7xl mx-auto px-6">
                 <div className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.6em] mb-16 text-center reveal">Clifton Strengths Profile</div>
@@ -236,31 +234,6 @@ const App = () => {
                     </div>
                   ))}
                 </div>
-              </div>
-            </section>
-
-            {/* DOMAINS */}
-            <section className="max-w-7xl mx-auto px-6 py-32">
-              <div className="grid md:grid-cols-3 gap-12">
-                {[
-                  { title: "Analysis", icon: Cpu, skills: ["Simcenter Amesim", "MATLAB", "FEA (Ansys)"] },
-                  { title: "Design", icon: PenTool, skills: ["SolidWorks Mastery", "PTC Creo", "GD&T Application"] },
-                  { title: "Industrial", icon: Settings, skills: ["Die Casting", "Sheet Metal DFM", "Metallurgy"] }
-                ].map((group, i) => (
-                  <div key={i} className="p-10 bg-white/[0.01] border border-white/5 hover:border-red-600/30 transition-all reveal group shadow-sm" style={{ transitionDelay: `${i * 150}ms` }}>
-                    <div className="w-12 h-12 bg-red-600/10 text-red-500 flex items-center justify-center rounded-sm mb-10 group-hover:bg-red-600 group-hover:text-white transition-colors">
-                      <group.icon size={22} />
-                    </div>
-                    <h5 className="text-xl font-bold text-white uppercase tracking-tight mb-8">{group.title}</h5>
-                    <ul className="space-y-4">
-                      {group.skills.map(s => (
-                        <li key={s} className="flex items-center gap-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest group-hover:text-slate-300">
-                          <div className="w-1.5 h-[1px] bg-red-600"></div> {s}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
               </div>
             </section>
           </div>
@@ -284,7 +257,34 @@ const App = () => {
                 <Download size={16} /> Download Design Portfolio
               </a>
             </div>
-            
+
+            {/* NEW SECTION: HEV Propulsion Projects */}
+            <div className="mb-24 reveal">
+               <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-10 flex items-center gap-4">
+                  <div className="w-12 h-[1px] bg-blue-400"></div> HEV Propulsion Projects
+               </h3>
+               <a 
+                 href="https://github.com/chethankanakamurthy/Vehicle-Systems-Modeling" 
+                 target="_blank"
+                 className="group block p-10 bg-white/[0.02] border border-white/10 rounded-sm hover:border-blue-400/50 transition-all shadow-xl"
+               >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-6">
+                       <div className="w-16 h-16 bg-blue-600/10 text-blue-400 flex items-center justify-center shrink-0">
+                          <Code size={32} />
+                       </div>
+                       <div>
+                          <h4 className="text-xl font-bold text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors">Vehicle Systems Modeling</h4>
+                          <p className="text-sm text-slate-500 mt-2 font-medium tracking-wide">Simulation and analysis of hybrid-electric vehicle propulsion architectures.</p>
+                       </div>
+                    </div>
+                    <div className="flex items-center gap-3 text-blue-400 font-bold uppercase text-[10px] tracking-[0.3em] group-hover:translate-x-4 transition-transform">
+                       View Source <ExternalLink size={14} />
+                    </div>
+                  </div>
+               </a>
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
               {projects.map((project, i) => (
                 <div 
@@ -308,53 +308,6 @@ const App = () => {
               ))}
             </div>
           </section>
-        )}
-
-        {/* PROJECT DETAIL */}
-        {selectedProject && (
-          <div className="animate-in slide-in-from-right duration-700 pb-32">
-            <div className="bg-[#020617] border-b border-white/5 py-32">
-              <div className="max-w-5xl mx-auto px-6">
-                <button onClick={() => setSelectedProject(null)} className="flex items-center gap-4 text-slate-500 hover:text-white mb-16 uppercase font-black text-[10px] tracking-widest group">
-                  <ChevronLeft size={16} className="group-hover:-translate-x-2 transition-transform text-red-600" /> Return to Index
-                </button>
-                <h2 className="text-6xl md:text-9xl font-black text-white mb-10 tracking-tighter uppercase italic leading-[0.9]">{selectedProject.title}</h2>
-                <div className="px-8 py-3 bg-red-600 text-white font-black uppercase tracking-[0.2em] text-[11px] w-fit shadow-lg shadow-red-900/20">Ref: {selectedProject.id.toUpperCase()}</div>
-              </div>
-            </div>
-
-            <div className="max-w-5xl mx-auto px-6 py-24 space-y-40">
-               <div className="grid md:grid-cols-12 gap-24">
-                  <div className="md:col-span-8 space-y-32">
-                     <section className="reveal">
-                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.6em] flex items-center gap-6 mb-12">
-                           <div className="w-12 h-[1px] bg-red-600"></div> Challenge
-                        </h4>
-                        <p className="text-4xl text-slate-300 leading-[1.3] font-medium italic border-l-4 border-blue-600/30 pl-10">"{selectedProject.context}"</p>
-                     </section>
-                     <section className="reveal">
-                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.6em] flex items-center gap-6 mb-12">
-                           <div className="w-10 h-[1px] bg-red-600"></div> Engineering Solution
-                        </h4>
-                        <p className="text-xl text-slate-400 leading-relaxed font-light">{selectedProject.mechanism}</p>
-                     </section>
-                  </div>
-                  <aside className="md:col-span-4 space-y-20">
-                     <section className="p-12 bg-red-600/[0.03] border border-red-600/10 space-y-12 reveal">
-                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.5em]">Validation</h4>
-                        <ul className="space-y-10">
-                           {selectedProject.results.map((res, i) => (
-                              <li key={i} className="flex gap-6 text-[11px] text-white font-bold uppercase tracking-widest leading-tight italic">
-                                 <div className="w-8 h-8 bg-red-600 flex items-center justify-center shrink-0 shadow-lg"><Award size={14} /></div>
-                                 <span className="mt-1">{res}</span>
-                              </li>
-                           ))}
-                        </ul>
-                     </section>
-                  </aside>
-               </div>
-            </div>
-          </div>
         )}
 
         {/* EXPERIENCE TIMELINE */}
@@ -428,11 +381,8 @@ const App = () => {
                  }
                ].map((item, i) => (
                  <div key={i} className="relative reveal" style={{ transitionDelay: `${i * 150}ms` }}>
-                    {/* Node */}
                     <div className={`absolute -left-[103px] top-1 w-6 h-6 rounded-full border-4 border-[#020617] transition-all duration-700 ${item.current ? 'bg-red-600 shadow-[0_0_25px_rgba(220,38,38,0.7)]' : 'bg-slate-800'}`}></div>
-                    
                     <span className={`text-[10px] font-bold uppercase tracking-[0.5em] mb-10 block ${item.current ? 'text-red-500' : 'text-slate-600'}`}>{item.date}</span>
-                    
                     <div className="flex flex-col md:flex-row gap-14 items-start mb-16">
                       <div className="w-[75px] h-[75px] bg-white rounded-sm flex items-center justify-center p-1 shrink-0 shadow-2xl group overflow-hidden">
                         <img 
@@ -447,10 +397,8 @@ const App = () => {
                         <h3 className="text-4xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-tight">{item.title}</h3>
                       </div>
                     </div>
-
                     <div className="space-y-10 pl-6 border-l border-white/5 ml-2">
                         {item.sub && <p className="text-slate-300 text-2xl font-medium leading-relaxed italic opacity-90">"{item.sub}"</p>}
-                        
                         {item.details && (
                           <div className="pt-4">
                             <button 
@@ -459,7 +407,6 @@ const App = () => {
                             >
                               Technical Breakdown <ChevronDown size={14} className={`transition-transform duration-700 ${item.isExpanded ? 'rotate-180 text-red-600' : ''}`} />
                             </button>
-                            
                             {item.isExpanded && (
                               <div className="mt-12 space-y-6 animate-in slide-in-from-top-4 duration-700">
                                 {item.details.map((detail, dIdx) => (
@@ -481,10 +428,8 @@ const App = () => {
 
         {activeTab === 'photography' && (
           <section className="relative min-h-screen">
-            {/* Artistic Texture */}
             <div className="absolute inset-0 z-0 bg-cover bg-fixed bg-center opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: "url('/camera.jpg')" }}></div>
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617] pointer-events-none"></div>
-
             <div className="relative z-10 max-w-7xl mx-auto px-10 py-48">
               <div className="mb-48 reveal text-center max-w-4xl mx-auto">
                 <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">Practice.</h2>
@@ -493,8 +438,6 @@ const App = () => {
                   Today, I use the lens to explore geometry beyond the engineering floor."
                 </p>
               </div>
-
-              {/* Dances Of India */}
               <div className="mb-72 reveal">
                 <div className="mb-32 flex items-center justify-between border-b border-white/5 pb-16">
                   <h3 className="text-5xl font-black text-white uppercase tracking-tighter italic">Dances Of India</h3>
@@ -503,7 +446,6 @@ const App = () => {
                     <span>Bengaluru_Series</span>
                   </div>
                 </div>
-                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-24">
                   {dancePhotos.map((filename, index) => (
                     <div 
@@ -522,8 +464,6 @@ const App = () => {
                   ))}
                 </div>
               </div>
-
-              {/* General Visual Log */}
               <div className="pt-48 border-t border-white/5 reveal">
                 <div className="mb-32"><h3 className="text-5xl font-black text-white uppercase italic tracking-tighter">Visual Log</h3></div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-40">
