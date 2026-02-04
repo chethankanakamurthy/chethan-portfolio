@@ -38,7 +38,6 @@ const App = () => {
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => observer.observe(el));
     
-    // Refresh observer when tabs change or dropdowns open
     return () => observer.disconnect();
   }, [activeTab, selectedProject, isAllegionExpanded, isBullworkExpanded]);
 
@@ -174,7 +173,7 @@ const App = () => {
       <main className="relative z-10 pt-20">
         {activeTab === 'home' && !selectedProject && (
           <div className="animate-in fade-in duration-700">
-            {/* HERO - UPDATED FOR INTERNSHIP/CO-OP SEEKING */}
+            {/* HERO - SEEKING INTERNSHIP/CO-OP */}
             <section className="max-w-7xl mx-auto px-6 py-24 md:py-48">
               <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 items-center">
                 <div className="lg:col-span-8 reveal">
@@ -267,10 +266,25 @@ const App = () => {
           </div>
         )}
 
-        {/* PROJECTS SECTION */}
+        {/* RECORDS SECTION */}
         {activeTab === 'portfolio' && !selectedProject && (
           <section className="max-w-7xl mx-auto px-6 py-24">
-            <h2 className="text-5xl font-black text-white mb-20 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2 reveal">Records</h2>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 reveal">
+              <div>
+                <h2 className="text-5xl font-black text-white uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Records</h2>
+                <p className="mt-6 text-red-500 font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-2">
+                  <Zap size={14} className="animate-pulse" /> This section is still under construction
+                </p>
+              </div>
+              <a 
+                href="/CNK Design Portfolio.pdf" 
+                download="CNK_Design_Portfolio.pdf"
+                className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-sm transition-all shadow-lg shadow-blue-900/20 text-xs uppercase tracking-widest"
+              >
+                <Download size={16} /> Download Design Portfolio
+              </a>
+            </div>
+            
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
               {projects.map((project, i) => (
                 <div 
@@ -347,7 +361,16 @@ const App = () => {
         {activeTab === 'experience' && (
           <section className="max-w-5xl mx-auto px-6 py-32">
              <div className="mb-32 reveal">
-              <h2 className="text-6xl md:text-8xl font-black text-white mb-10 uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Timeline.</h2>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+                <h2 className="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Timeline.</h2>
+                <a 
+                  href="/Chethan_Resume.pdf" 
+                  download="Chethan_Resume.pdf"
+                  className="flex items-center gap-3 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-sm transition-all shadow-lg shadow-red-900/20 text-xs uppercase tracking-widest"
+                >
+                  <Download size={16} /> Download Resume
+                </a>
+              </div>
               <p className="text-slate-400 text-xl font-medium mt-10">Industrial footprint and academic evolution from 2017 to Present.</p>
             </div>
 
@@ -410,7 +433,7 @@ const App = () => {
                     
                     <span className={`text-[10px] font-bold uppercase tracking-[0.5em] mb-10 block ${item.current ? 'text-red-500' : 'text-slate-600'}`}>{item.date}</span>
                     
-                    <div className="flex flex-col md:flex-row gap-12 items-start mb-16">
+                    <div className="flex flex-col md:flex-row gap-14 items-start mb-16">
                       <div className="w-[75px] h-[75px] bg-white rounded-sm flex items-center justify-center p-1 shrink-0 shadow-2xl group overflow-hidden">
                         <img 
                           src={item.logo} 
@@ -464,7 +487,7 @@ const App = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto px-10 py-48">
               <div className="mb-48 reveal text-center max-w-4xl mx-auto">
-                <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">say cheese!!</h2>
+                <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">Practice.</h2>
                 <p className="text-slate-400 text-3xl font-medium leading-relaxed italic opacity-80 border-x border-white/10 px-14 py-4">
                   "Photography has been a passion of mine right from my 5th grade, when I first clicked an image from a film camera. 
                   Today, I use the lens to explore geometry beyond the engineering floor."
@@ -537,6 +560,7 @@ const App = () => {
                     src="/Photos/steve.jpeg" 
                     className="w-32 h-32 rounded-full border-4 border-red-600/30 object-cover grayscale contrast-125 shadow-2xl" 
                     alt="Steve Jobs"
+                    onError={(e) => e.target.src = "https://images.unsplash.com/photo-1554446422-d05db23719d2?auto=format&fit=crop&q=80&w=400"}
                   />
                   <div className="absolute inset-0 rounded-full border border-red-600 animate-pulse opacity-50"></div>
                 </div>
