@@ -76,7 +76,7 @@ const SELECTED = {
   // Mixed orientations — rendered as a masonry grid so each frame keeps its shape.
   photos: [
     { src: '/Photos/photo1.jpg', title: 'City Goose', caption: 'A Canada goose strolls the Chicago lakefront.' },
-    { src: '/Photos/Stories/ck-5-2.jpg', title: 'Theyyam', caption: 'A ritual dancer mid-invocation, North Kerala.' },
+    { src: '/Photos/Stories/ck-5-2.jpg', title: 'Bhoota Kola', caption: 'A ritual dancer mid-invocation, Mangalore, Karnataka.' },
     { src: '/Photos/Stories/ck-br-2827.jpg', title: 'The Hill Ahead', caption: 'A rider sizes up the climb over green paddy.' },
     { src: '/Photos/photo3.jpg', title: 'Wonder', caption: 'A little one, wide-eyed at the world.' },
     { src: '/Photos/Stories/cnk-northrenlights-4397.jpg', title: 'Under the Aurora', caption: 'A quiet moment beneath the northern lights.' },
