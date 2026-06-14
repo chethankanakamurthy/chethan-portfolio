@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  User, Briefcase, FileText, Mail, Linkedin, Instagram,
-  ChevronRight, Award, Settings, Cpu, Camera, Menu, X,
-  ChevronLeft, ArrowRight, Zap, Target, ShieldCheck,
-  Maximize2, Download, ExternalLink, PenTool, Layers,
-  ChevronDown, Code
+import {
+  Mail, Linkedin, Instagram, Camera, Menu, X,
+  ArrowRight, Maximize2, ShoppingBag, Ruler, Check, Truck, Aperture
 } from 'lucide-react';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('home');
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [activeTab, setActiveTab] = useState('gallery');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isAllegionExpanded, setIsAllegionExpanded] = useState(false);
-  const [isBullworkExpanded, setIsBullworkExpanded] = useState(false);
 
   // --- PHOTOGRAPHY CONFIGURATION ---
   const generalPhotos = [
@@ -23,6 +17,33 @@ const App = () => {
   const dancePhotos = [
     "dance1.JPG", "dance2.JPG", "dance3.JPG"
   ];
+
+  // --- PRINTS FOR SALE ---
+  // Edit titles, editions, and the image list to control what's offered.
+  const prints = [
+    { title: "Geometry in Motion", image: "/Photos/photo5.jpg", edition: "Limited Edition / 25" },
+    { title: "Urban Lines", image: "/Photos/photo2.jpg", edition: "Open Edition" },
+    { title: "Dances of India — II", image: "/Photos/Dances Of India/dance2.JPG", edition: "Limited Edition / 25" },
+    { title: "Quiet Light", image: "/Photos/photo4.jpg", edition: "Open Edition" },
+    { title: "Dances of India — I", image: "/Photos/Dances Of India/dance1.JPG", edition: "Limited Edition / 25" },
+    { title: "Still Frame", image: "/Photos/photo6.jpg", edition: "Open Edition" },
+  ];
+
+  // Global size / price options (edit to taste).
+  const printSizes = [
+    { size: '8" × 10"', price: "$45" },
+    { size: '12" × 18"', price: "$80" },
+    { size: '18" × 24"', price: "$130" },
+    { size: '24" × 36"', price: "$220" },
+  ];
+
+  // Build a pre-filled order email for a given print.
+  const orderLink = (title) =>
+    `mailto:ckanakamurthy@gmail.com?subject=${encodeURIComponent(`Print Order — ${title}`)}` +
+    `&body=${encodeURIComponent(
+      `Hi Chethan,\n\nI'd like to order a print of "${title}".\n\n` +
+      `Preferred size:\nQuantity:\nFinish (matte / luster):\nShipping address:\n\nThanks!`
+    )}`;
 
   // Scroll reveal animations logic
   useEffect(() => {
@@ -37,68 +58,20 @@ const App = () => {
 
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => observer.observe(el));
-    
-    return () => observer.disconnect();
-  }, [activeTab, selectedProject, isAllegionExpanded, isBullworkExpanded]);
 
-  const projects = [
-    {
-      id: 'motion-multiplication',
-      title: "Motion Multiplication Mechanism",
-      subtitle: "Life-Safety Hardware | Best Innovation Award",
-      image: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&q=80&w=800",
-      context: "Existing exit devices provided ~1\" of latch engagement. Under hurricane/tornado conditions, this caused unlatching due to door deflection. My design doubled this to 2\" within the same footprint.",
-      role: ["Concept Generation", "Kinematic Analysis", "DFM-aware Design"],
-      mechanism: "A cam-driven mechanism was engineered to transform limited push-bar motion into 2\" of linear travel. The profile was optimized for smooth mechanical advantage and durability.",
-      results: [
-        "100% Increase in latch engagement",
-        "Zero unlatching in simulated storm tests",
-        "Allegion Best Innovation Award Winner"
-      ],
-      tags: ["Kinematics", "SolidWorks", "Safety"]
-    },
-    {
-      id: 'deadbolt-design',
-      title: "Low Profile Deadbolt",
-      subtitle: "Residential Security | Double Crank Mechanism",
-      image: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
-      context: "Developed a BHMA Grade 1 security lock matching the 0.5\" slim profile of competitors without compromising internal mechanical integrity.",
-      role: ["Competitive Benchmarking", "Mechanism Synthesis", "FEA Analysis"],
-      mechanism: "Utilized a Double Crank Linkage operating on a flat plane, allowing the high-strength mechanism to 'fold' into a thin housing protrusion.",
-      results: [
-        "Achieved 0.5-inch slim profile",
-        "Validated against BHMA Grade 1 standards",
-        "Maintained premium tactile user experience"
-      ],
-      tags: ["FEA", "Linkage", "Manufacturing"]
-    },
-    {
-      id: 'ag-ev',
-      title: "Self-Driving Ag-EV Drivetrain",
-      subtitle: "Electric Vehicle | Structural Optimization",
-      image: "https://images.unsplash.com/photo-1530268576341-94943f65600c?auto=format&fit=crop&q=80&w=800",
-      context: "Concept development for an autonomous agricultural vehicle drivetrain, focusing on efficiency and safety.",
-      role: ["Gearbox Optimization", "Structural FEA", "Chassis Design"],
-      mechanism: "Optimized drivetrain performance through custom gear ratios and conducted structural FEA on the roll cage to ensure operator safety during heavy maneuvers.",
-      results: [
-        "Optimized Gearbox Efficiency",
-        "Validated Structural Integrity",
-        "3D Printed Functional Prototype"
-      ],
-      tags: ["EV", "Drivetrain", "Simcenter"]
-    }
-  ];
+    return () => observer.disconnect();
+  }, [activeTab]);
 
   const NavItem = ({ id, label, icon: Icon }) => (
     <button
-      onClick={() => { setActiveTab(id); setSelectedProject(null); setIsMenuOpen(false); }}
+      onClick={() => { setActiveTab(id); setIsMenuOpen(false); window.scrollTo({ top: 0 }); }}
       className={`relative flex items-center gap-2 px-5 py-2 transition-all cursor-pointer group ${
-        activeTab === id && !selectedProject ? 'text-red-500' : 'text-slate-500 hover:text-slate-300'
+        activeTab === id ? 'text-red-500' : 'text-slate-500 hover:text-slate-300'
       }`}
     >
-      <Icon size={14} className={activeTab === id && !selectedProject ? 'text-red-600' : 'text-slate-700'} />
+      <Icon size={14} className={activeTab === id ? 'text-red-600' : 'text-slate-700'} />
       <span className="text-[11px] font-bold uppercase tracking-[0.2em]">{label}</span>
-      {activeTab === id && !selectedProject && (
+      {activeTab === id && (
         <div className="absolute -bottom-1 left-5 right-5 h-[2px] bg-red-600 rounded-full animate-in fade-in duration-500"></div>
       )}
     </button>
@@ -118,13 +91,13 @@ const App = () => {
         .reveal-visible { opacity: 1; transform: translateY(0); }
         .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); }
       `}</style>
-      
+
       <div className="fixed inset-0 bg-grid pointer-events-none z-0"></div>
       <div className="fixed inset-0 bg-gradient-to-b from-blue-900/10 via-transparent to-red-900/10 pointer-events-none z-0"></div>
 
       {/* Lightbox */}
       {selectedImage && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-500"
           onClick={() => setSelectedImage(null)}
         >
@@ -136,22 +109,21 @@ const App = () => {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-6 cursor-pointer group" onClick={() => { setActiveTab('home'); setSelectedProject(null); }}>
+          <div className="flex items-center gap-6 cursor-pointer group" onClick={() => { setActiveTab('gallery'); window.scrollTo({ top: 0 }); }}>
             <div className="w-10 h-10 bg-red-600 rounded-sm flex items-center justify-center text-white font-black text-xl group-hover:bg-blue-600 transition-colors duration-500">CK</div>
             <div className="flex flex-col border-l border-white/10 pl-6">
               <h1 className="font-bold text-lg text-white uppercase tracking-tight leading-none">Chethan Kanakamurthy</h1>
-              <p className="text-[9px] text-blue-400 font-bold uppercase tracking-[0.3em] mt-1">Design Engineer • Michigan Tech</p>
+              <p className="text-[9px] text-blue-400 font-bold uppercase tracking-[0.3em] mt-1">Photography</p>
             </div>
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <NavItem id="home" label="Index" icon={Target} />
-            <NavItem id="portfolio" label="Records" icon={Layers} />
-            <NavItem id="experience" label="Timeline" icon={Briefcase} />
-            <NavItem id="photography" label="Gallery" icon={Camera} />
+            <NavItem id="gallery" label="Gallery" icon={Camera} />
+            <NavItem id="prints" label="Prints" icon={ShoppingBag} />
             <div className="w-[1px] h-4 bg-white/10 mx-4"></div>
             <div className="flex gap-4">
               <a href="mailto:ckanakamurthy@gmail.com" className="text-slate-400 hover:text-red-500 transition-colors"><Mail size={18} /></a>
+              <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="text-slate-400 hover:text-red-500 transition-colors"><Instagram size={18} /></a>
               <a href="https://linkedin.com/in/chethan-nk" target="_blank" className="text-slate-400 hover:text-red-500 transition-colors"><Linkedin size={18} /></a>
             </div>
           </div>
@@ -164,280 +136,35 @@ const App = () => {
 
       {/* Mobile Drawer */}
       <div className={`fixed inset-0 z-40 bg-[#020617] pt-32 px-8 flex flex-col gap-8 transition-transform duration-500 lg:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <NavItem id="home" label="Index" icon={Target} />
-        <NavItem id="portfolio" label="Records" icon={Layers} />
-        <NavItem id="experience" label="Timeline" icon={Briefcase} />
-        <NavItem id="photography" label="Gallery" icon={Camera} />
+        <NavItem id="gallery" label="Gallery" icon={Camera} />
+        <NavItem id="prints" label="Prints" icon={ShoppingBag} />
       </div>
 
       <main className="relative z-10 pt-20">
-        {activeTab === 'home' && !selectedProject && (
-          <div className="animate-in fade-in duration-700">
-            <section className="max-w-7xl mx-auto px-6 py-24 md:py-48">
-              <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 items-center">
-                <div className="lg:col-span-8 reveal">
-                  <span className="inline-block px-3 py-1 rounded bg-red-600/10 text-red-500 border border-red-600/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10">
-                    Seeking Summer / Fall 2026 Internships & Co-ops
-                  </span>
-                  <h2 className="text-6xl md:text-9xl font-bold text-white mb-10 leading-[0.95] tracking-tight uppercase italic">
-                    Engineering <br /><span className="text-red-600 not-italic font-black">the Future.</span>
-                  </h2>
-                  <p className="max-w-2xl text-2xl text-slate-400 mb-14 leading-relaxed font-medium">
-                    Master's candidate at Michigan Tech with 3 years of industrial experience at Allegion. 
-                    Actively seeking roles to contribute technical rigor in mechanical design and manufacturing.
-                  </p>
-                  <div className="flex flex-wrap gap-8">
-                    <button 
-                      onClick={() => setActiveTab('portfolio')}
-                      className="px-12 py-5 bg-red-600 text-white font-black uppercase tracking-widest text-[11px] rounded-sm hover:bg-red-700 transition-all shadow-2xl shadow-red-900/30"
-                    >
-                      View Technical Record <ArrowRight size={16} className="inline ml-2" />
-                    </button>
-                    <div className="flex gap-4 items-center">
-                       <a href="https://www.instagram.com/chethan_kanakamurthy/" target="_blank" className="p-4 bg-white/5 border border-white/10 rounded-sm hover:bg-red-600 hover:text-white transition-all"><Instagram size={22} /></a>
-                    </div>
-                  </div>
-                  <div className="mt-12 flex items-center gap-4 text-slate-500 uppercase tracking-[0.4em] text-[10px] font-bold">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div> Available for Relocation
-                  </div>
-                </div>
-
-                <div className="lg:col-span-4 w-full reveal" style={{ transitionDelay: '200ms' }}>
-                  <div className="relative group">
-                    <div className="aspect-[4/5] bg-slate-900 border border-white/5 overflow-hidden relative shadow-2xl rounded-sm">
-                      <img 
-                        src="/profile.jpg" 
-                        alt="Chethan Portrait" 
-                        className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-                        onError={(e) => e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"}
-                      />
-                      <div className="absolute inset-0 bg-red-900/10 mix-blend-overlay"></div>
-                    </div>
-                    <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-red-600 opacity-40"></div>
-                    <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-red-600 opacity-40"></div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-white/[0.02] border-y border-white/5 py-24">
-              <div className="max-w-7xl mx-auto px-6">
-                <div className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.6em] mb-16 text-center reveal">Clifton Strengths Profile</div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-12 text-center">
-                  {[
-                    "Strategic", "Responsibility", "Analytical", "Learner", "Futuristic"
-                  ].map((strength, i) => (
-                    <div key={i} className="reveal group" style={{ transitionDelay: `${i * 100}ms` }}>
-                      <div className="text-red-500 mb-6 flex justify-center"><Target size={24} /></div>
-                      <h3 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase italic">{strength}</h3>
-                      <div className="w-1 h-1 bg-blue-500 rounded-full mx-auto mt-6 group-hover:scale-[6] transition-all"></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          </div>
-        )}
-
-        {/* RECORDS SECTION */}
-        {activeTab === 'portfolio' && !selectedProject && (
-          <section className="max-w-7xl mx-auto px-6 py-24">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 reveal">
-              <div>
-                <h2 className="text-5xl font-black text-white uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Records</h2>
-                <p className="mt-6 text-red-500 font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-2">
-                  <Zap size={14} className="animate-pulse" /> This section is still under construction
-                </p>
-              </div>
-              <a 
-                href="/CNK Design Portfolio.pdf" 
-                download="CNK_Design_Portfolio.pdf"
-                className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-sm transition-all shadow-lg shadow-blue-900/20 text-xs uppercase tracking-widest"
-              >
-                <Download size={16} /> Download Design Portfolio
-              </a>
-            </div>
-
-            {/* NEW SECTION: HEV Propulsion Projects */}
-            <div className="mb-24 reveal">
-               <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-10 flex items-center gap-4">
-                  <div className="w-12 h-[1px] bg-blue-400"></div> HEV Propulsion Projects
-               </h3>
-               <a 
-                 href="https://github.com/chethankanakamurthy/Vehicle-Systems-Modeling" 
-                 target="_blank"
-                 className="group block p-10 bg-white/[0.02] border border-white/10 rounded-sm hover:border-blue-400/50 transition-all shadow-xl"
-               >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-6">
-                       <div className="w-16 h-16 bg-blue-600/10 text-blue-400 flex items-center justify-center shrink-0">
-                          <Code size={32} />
-                       </div>
-                       <div>
-                          <h4 className="text-xl font-bold text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors">Vehicle Systems Modeling</h4>
-                          <p className="text-sm text-slate-500 mt-2 font-medium tracking-wide">Simulation and analysis of hybrid-electric vehicle propulsion architectures.</p>
-                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 text-blue-400 font-bold uppercase text-[10px] tracking-[0.3em] group-hover:translate-x-4 transition-transform">
-                       View Source <ExternalLink size={14} />
-                    </div>
-                  </div>
-               </a>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {projects.map((project, i) => (
-                <div 
-                  key={project.id}
-                  onClick={() => setSelectedProject(project)}
-                  className="group bg-slate-900 border border-white/5 overflow-hidden cursor-pointer hover:border-red-600/40 transition-all flex flex-col reveal shadow-2xl"
-                  style={{ transitionDelay: `${i * 100}ms` }}
-                >
-                  <div className="h-72 overflow-hidden relative">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-40 group-hover:opacity-100 transition-all duration-1000 grayscale group-hover:grayscale-0" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent"></div>
-                  </div>
-                  <div className="p-12">
-                    <h3 className="text-2xl font-bold text-white mb-4 leading-none uppercase tracking-tight group-hover:text-red-500 transition-colors">{project.title}</h3>
-                    <p className="text-[10px] text-blue-400 uppercase font-bold tracking-widest leading-loose mb-10 italic">"{project.subtitle}"</p>
-                    <div className="flex items-center gap-3 text-red-500 text-[10px] font-black uppercase tracking-[0.3em] group-hover:translate-x-4 transition-transform">
-                      Open Log <ArrowRight size={14} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* EXPERIENCE TIMELINE */}
-        {activeTab === 'experience' && (
-          <section className="max-w-5xl mx-auto px-6 py-32">
-             <div className="mb-32 reveal">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                <h2 className="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter italic border-b-4 border-red-600 w-fit pb-2">Timeline.</h2>
-                <a 
-                  href="/Chethan_Resume.pdf" 
-                  download="Chethan_Resume.pdf"
-                  className="flex items-center gap-3 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-sm transition-all shadow-lg shadow-red-900/20 text-xs uppercase tracking-widest"
-                >
-                  <Download size={16} /> Download Resume
-                </a>
-              </div>
-              <p className="text-slate-400 text-xl font-medium mt-10">Industrial footprint and academic evolution from 2017 to Present.</p>
-            </div>
-
-            <div className="space-y-52 relative border-l-2 border-white/5 ml-4 pl-20">
-               {[
-                 { 
-                   id: 'mtu',
-                   date: "2025 — PRESENT", 
-                   org: "Michigan Technological University",
-                   title: "Master's in Mechanical Engineering", 
-                   logo: "/Logos/mtu.png", 
-                   current: true,
-                   sub: "Learnt Engineering by not eating Masala Dosa."
-                 },
-                 { 
-                   id: 'allegion',
-                   date: "2022 — 2025", 
-                   title: "Associate Mechanical Engineer", 
-                   org: "Allegion India", 
-                   logo: "/Logos/allegion.png",
-                   sub: "Drove mechanical innovation and localization achieving $300K savings.",
-                   isExpanded: isAllegionExpanded,
-                   setExpanded: setIsAllegionExpanded,
-                   details: [
-                     "Engineered mechanical lock mechanisms and deadbolt latches with 100% compliance to BHMA and industry standards.",
-                     "Spearheaded localization efforts as part of the core team for the 'India for India' project, reducing dependency on imports and improving supply resilience.",
-                     "Leveraged ERP systems for Zion (Wave 1/2) and Project Martha, achieving 95% on-time delivery and $300K savings in Phase 1.",
-                     "Improved product reliability through kinematic studies, advanced GD&T application, and tolerance stack-up analysis.",
-                     "Enhanced security and innovation by researching competitor products and patents, contributing to new technical disclosures.",
-                     "Streamlined procurement by handling RFQs, supplier quotations, and documentation for prototypes."
-                   ]
-                 },
-                 { 
-                   id: 'bullwork',
-                   date: "2021 — 2021", 
-                   title: "Engineering Intern", 
-                   org: "Bullwork Mobility", 
-                   logo: "/Logos/bullwork.png",
-                   sub: "Optimized Ag-EV drivetrain and chassis structural analysis.",
-                   isExpanded: isBullworkExpanded,
-                   setExpanded: setIsBullworkExpanded,
-                   details: [
-                     "Optimized performance of an electric agricultural vehicle by designing a high-efficiency gearbox tailored for low-speed high-torque applications.",
-                     "Conducted comprehensive structural analysis of the chassis, roll cage, and cabin using SolidWorks Simulation.",
-                     "Collaborated on industrial design initiatives for improved cabin ergonomics and serviceability."
-                   ]
-                 },
-                 { 
-                   id: 'dbit',
-                   date: "2017 — 2021", 
-                   title: "Bachelor's in Mechanical Engineering", 
-                   org: "Don Bosco Institute of Technology, Bangalore", 
-                   logo: "/Logos/dbit.png",
-                   sub: "Learnt Engineering by eating lot of Masala Dosa." 
-                 }
-               ].map((item, i) => (
-                 <div key={i} className="relative reveal" style={{ transitionDelay: `${i * 150}ms` }}>
-                    <div className={`absolute -left-[103px] top-1 w-6 h-6 rounded-full border-4 border-[#020617] transition-all duration-700 ${item.current ? 'bg-red-600 shadow-[0_0_25px_rgba(220,38,38,0.7)]' : 'bg-slate-800'}`}></div>
-                    <span className={`text-[10px] font-bold uppercase tracking-[0.5em] mb-10 block ${item.current ? 'text-red-500' : 'text-slate-600'}`}>{item.date}</span>
-                    <div className="flex flex-col md:flex-row gap-14 items-start mb-16">
-                      <div className="w-[75px] h-[75px] bg-white rounded-sm flex items-center justify-center p-1 shrink-0 shadow-2xl group overflow-hidden">
-                        <img 
-                          src={item.logo} 
-                          alt={item.org} 
-                          className="max-w-full max-h-full object-contain brightness-100 opacity-100"
-                          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=100" }} 
-                        />
-                      </div>
-                      <div>
-                        <p className="text-blue-400 font-bold uppercase tracking-[0.4em] text-[10px] mb-3 leading-none">{item.org}</p>
-                        <h3 className="text-4xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-tight">{item.title}</h3>
-                      </div>
-                    </div>
-                    <div className="space-y-10 pl-6 border-l border-white/5 ml-2">
-                        {item.sub && <p className="text-slate-300 text-2xl font-medium leading-relaxed italic opacity-90">"{item.sub}"</p>}
-                        {item.details && (
-                          <div className="pt-4">
-                            <button 
-                              onClick={() => item.setExpanded(!item.isExpanded)}
-                              className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.5em] text-slate-500 hover:text-white transition-all py-3 px-8 border border-white/10 hover:border-red-600/40 bg-white/[0.01]"
-                            >
-                              Technical Breakdown <ChevronDown size={14} className={`transition-transform duration-700 ${item.isExpanded ? 'rotate-180 text-red-600' : ''}`} />
-                            </button>
-                            {item.isExpanded && (
-                              <div className="mt-12 space-y-6 animate-in slide-in-from-top-4 duration-700">
-                                {item.details.map((detail, dIdx) => (
-                                  <div key={dIdx} className="flex gap-8 p-8 bg-white/[0.02] border border-white/5 shadow-sm">
-                                    <Zap size={18} className="text-red-600 shrink-0 mt-1" />
-                                    <p className="text-slate-200 text-lg leading-relaxed font-medium">{detail}</p>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                    </div>
-                 </div>
-               ))}
-            </div>
-          </section>
-        )}
-
-        {activeTab === 'photography' && (
+        {/* GALLERY */}
+        {activeTab === 'gallery' && (
           <section className="relative min-h-screen">
             <div className="absolute inset-0 z-0 bg-cover bg-fixed bg-center opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: "url('/camera.jpg')" }}></div>
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617] pointer-events-none"></div>
             <div className="relative z-10 max-w-7xl mx-auto px-10 py-48">
               <div className="mb-48 reveal text-center max-w-4xl mx-auto">
+                <span className="inline-flex items-center gap-3 px-3 py-1 rounded bg-red-600/10 text-red-500 border border-red-600/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10">
+                  <Aperture size={12} /> Bengaluru • Houghton
+                </span>
                 <h2 className="text-7xl md:text-[11rem] font-black text-white mb-12 tracking-tighter leading-none italic opacity-90 uppercase">Practice.</h2>
                 <p className="text-slate-400 text-3xl font-medium leading-relaxed italic opacity-80 border-x border-white/10 px-14 py-4">
-                  "Photography has been a passion of mine right from my 5th grade, when I first clicked an image from a film camera. 
+                  "Photography has been a passion of mine right from my 5th grade, when I first clicked an image from a film camera.
                   Today, I use the lens to explore geometry beyond the engineering floor."
                 </p>
+                <button
+                  onClick={() => { setActiveTab('prints'); window.scrollTo({ top: 0 }); }}
+                  className="mt-16 inline-flex items-center gap-4 px-12 py-5 bg-red-600 text-white font-black uppercase tracking-widest text-[11px] rounded-sm hover:bg-red-700 transition-all shadow-2xl shadow-red-900/30"
+                >
+                  <ShoppingBag size={16} /> Shop Fine-Art Prints <ArrowRight size={16} />
+                </button>
               </div>
+
+              {/* Dances of India */}
               <div className="mb-72 reveal">
                 <div className="mb-32 flex items-center justify-between border-b border-white/5 pb-16">
                   <h3 className="text-5xl font-black text-white uppercase tracking-tighter italic">Dances Of India</h3>
@@ -448,8 +175,8 @@ const App = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-24">
                   {dancePhotos.map((filename, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="group cursor-zoom-in reveal"
                       style={{ transitionDelay: `${index * 300}ms` }}
                       onClick={() => setSelectedImage(`/Photos/Dances Of India/${filename}`)}
@@ -464,6 +191,8 @@ const App = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Visual Log */}
               <div className="pt-48 border-t border-white/5 reveal">
                 <div className="mb-32"><h3 className="text-5xl font-black text-white uppercase italic tracking-tighter">Visual Log</h3></div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-40">
@@ -477,49 +206,111 @@ const App = () => {
             </div>
           </section>
         )}
+
+        {/* PRINTS / SHOP */}
+        {activeTab === 'prints' && (
+          <section className="max-w-7xl mx-auto px-6 py-32">
+            <div className="mb-24 reveal text-center max-w-3xl mx-auto">
+              <span className="inline-flex items-center gap-3 px-3 py-1 rounded bg-red-600/10 text-red-500 border border-red-600/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10">
+                <ShoppingBag size={12} /> Fine-Art Prints
+              </span>
+              <h2 className="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter italic mb-10">Own the Frame.</h2>
+              <p className="text-slate-400 text-xl font-medium leading-relaxed">
+                Each photograph is available as a museum-grade archival print, hand-finished and ready to hang.
+                Select a piece below and send an order request — I'll confirm sizing, finish, and shipping by email.
+              </p>
+            </div>
+
+            {/* Pricing / sizes */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24 reveal">
+              {printSizes.map((s, i) => (
+                <div key={i} className="p-8 bg-white/[0.02] border border-white/10 rounded-sm text-center hover:border-red-600/40 transition-all">
+                  <Ruler size={18} className="text-blue-400 mx-auto mb-5" />
+                  <p className="text-lg font-black text-white uppercase tracking-tight">{s.size}</p>
+                  <p className="text-red-500 font-mono text-sm mt-2 tracking-widest">{s.price}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Print grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-32">
+              {prints.map((print, i) => (
+                <div
+                  key={i}
+                  className="group bg-slate-900 border border-white/5 overflow-hidden flex flex-col reveal shadow-2xl hover:border-red-600/40 transition-all"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
+                  <div className="aspect-[4/5] overflow-hidden relative cursor-zoom-in" onClick={() => setSelectedImage(print.image)}>
+                    <img
+                      src={print.image}
+                      alt={print.title}
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105"
+                      onError={(e) => e.target.src = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800"}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/80 to-transparent"></div>
+                    <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xl p-3 border border-white/20">
+                      <Maximize2 size={16} className="text-white" />
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col gap-5 flex-1">
+                    <div>
+                      <p className="text-[10px] text-blue-400 uppercase font-bold tracking-[0.3em] mb-3">{print.edition}</p>
+                      <h3 className="text-2xl font-bold text-white uppercase tracking-tight leading-none group-hover:text-red-500 transition-colors">{print.title}</h3>
+                    </div>
+                    <p className="text-slate-500 text-sm font-medium">From <span className="text-white font-bold">{printSizes[0].price}</span></p>
+                    <a
+                      href={orderLink(print.title)}
+                      className="mt-auto flex items-center justify-center gap-3 px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-sm transition-all text-[10px] uppercase tracking-[0.3em]"
+                    >
+                      <ShoppingBag size={14} /> Order Print
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Process / assurances */}
+            <div className="grid md:grid-cols-3 gap-12 border-t border-white/5 pt-24 reveal">
+              {[
+                { icon: Camera, title: "Archival Quality", text: "Printed on museum-grade fine-art paper with pigment inks rated for 100+ years." },
+                { icon: Check, title: "Signed & Numbered", text: "Limited editions are hand-signed and numbered; open editions are signed on the reverse." },
+                { icon: Truck, title: "Shipped Worldwide", text: "Prints ship flat or rolled in protective packaging. Shipping quoted at checkout by email." },
+              ].map((f, i) => (
+                <div key={i} className="reveal" style={{ transitionDelay: `${i * 100}ms` }}>
+                  <f.icon size={24} className="text-red-500 mb-6" />
+                  <h4 className="text-lg font-black text-white uppercase tracking-tight mb-4">{f.title}</h4>
+                  <p className="text-slate-400 text-sm font-medium leading-relaxed">{f.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <footer className="border-t border-white/5 py-72 bg-[#020617] text-center px-10 relative overflow-hidden">
         <div className="max-w-5xl mx-auto reveal">
-          {activeTab === 'photography' ? (
-            <div className="flex flex-col items-center gap-24">
-              <h4 className="text-4xl md:text-7xl font-black text-white tracking-tighter leading-tight max-w-4xl italic opacity-80 uppercase leading-none">This is just the beginning.</h4>
-              <div className="flex flex-col items-center gap-12">
-                <p className="text-blue-400 uppercase tracking-[0.8em] text-[10px] font-bold">Follow Work / Enquiries via DM or Mail</p>
-                <a href="mailto:ckanakamurthy@gmail.com" className="inline-flex items-center gap-10 bg-red-600 text-white font-black text-xl px-24 py-10 transition-all hover:bg-red-700 uppercase tracking-[0.4em] shadow-3xl shadow-red-900/40">
-                  <Mail size={24} strokeWidth={2} /> Enquiry
-                </a>
-              </div>
+          <div className="flex flex-col items-center gap-24">
+            <h4 className="text-4xl md:text-7xl font-black text-white tracking-tighter leading-tight max-w-4xl italic opacity-80 uppercase leading-none">This is just the beginning.</h4>
+            <div className="flex flex-col items-center gap-12">
+              <p className="text-blue-400 uppercase tracking-[0.8em] text-[10px] font-bold">Prints, Commissions & Enquiries via DM or Mail</p>
+              <a href="mailto:ckanakamurthy@gmail.com" className="inline-flex items-center gap-10 bg-red-600 text-white font-black text-xl px-24 py-10 transition-all hover:bg-red-700 uppercase tracking-[0.4em] shadow-3xl shadow-red-900/40">
+                <Mail size={24} strokeWidth={2} /> Enquiry
+              </a>
             </div>
-          ) : (
-            <div className="flex flex-col items-center gap-16">
-              <span className="text-[10px] font-bold text-red-500 uppercase tracking-[0.6em]">Quote</span>
-              <div className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto px-6">
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <h4 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[1.1] italic uppercase">
-                    "Creativity is just <br className="hidden md:block" /> connecting things."
-                  </h4>
-                  <p className="text-red-500 font-mono text-xs mt-6 uppercase tracking-[0.4em] font-bold">
-                    — Steve Jobs
-                  </p>
-                </div>
-              </div>
-              <div className="w-40 h-1 bg-red-600 rounded-full shadow-[0_0_40px_rgba(220,38,38,0.8)] mt-8"></div>
-            </div>
-          )}
-          
+          </div>
+
           <div className="flex justify-center gap-24 mt-48">
             {[
               { href: "mailto:ckanakamurthy@gmail.com", icon: Mail, color: 'hover:text-red-500' },
-              { href: "https://linkedin.com/in/chethan-nk", icon: Linkedin, color: 'hover:text-blue-400' },
-              { href: "https://www.instagram.com/chethan_kanakamurthy/", icon: Instagram, color: 'hover:text-red-400' }
+              { href: "https://www.instagram.com/chethan_kanakamurthy/", icon: Instagram, color: 'hover:text-red-400' },
+              { href: "https://linkedin.com/in/chethan-nk", icon: Linkedin, color: 'hover:text-blue-400' }
             ].map((link, lIdx) => (
               <a key={lIdx} href={link.href} target="_blank" className={`group transition-transform hover:scale-125 duration-500 ${link.color}`}>
                 <link.icon size={28} strokeWidth={1.5} className="text-slate-700 transition-all duration-700" />
               </a>
             ))}
           </div>
-          <p className="text-[10px] text-slate-700 uppercase tracking-[1em] mt-52 font-bold">© 2026 Chethan Kanakamurthy • Michigan Tech</p>
+          <p className="text-[10px] text-slate-700 uppercase tracking-[1em] mt-52 font-bold">© 2026 Chethan Kanakamurthy • Photography</p>
         </div>
       </footer>
     </div>
