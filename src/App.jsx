@@ -350,18 +350,16 @@ const App = () => {
 
         {/* ------------------------------------------------- DANCES OF INDIA */}
         <section id="series" className="scroll-mt-24 border-t border-[#1A1916]/10">
-          {/* intro */}
-          <div className="mx-auto max-w-[1400px] px-6 pt-24 md:px-10 md:pt-32">
-            <div className="reveal grid gap-8 md:grid-cols-12 md:items-end">
-              <div className="md:col-span-7">
-                <p className="font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F]">
-                  My Passion Project
-                </p>
-                <h2 className="mt-4 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
-                  Dances of India
-                </h2>
-              </div>
-              <p className="font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/70 md:col-span-5">
+          {/* intro — left edge aligns with the panel text below */}
+          <div className="px-6 pt-24 md:px-12 md:pt-32 lg:px-16">
+            <div className="reveal max-w-3xl">
+              <p className="font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F]">
+                My Passion Project
+              </p>
+              <h2 className="mt-4 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
+                Dances of India
+              </h2>
+              <p className="mt-8 max-w-xl font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/70">
                 An ongoing personal project documenting the classical and folk dance traditions of
                 India — chasing the instant a held pose becomes motion.
               </p>
@@ -500,7 +498,7 @@ const App = () => {
                   }}
                   className="group block cursor-zoom-in bg-[#F4F2EC] p-3 shadow-[0_1px_3px_rgba(26,25,22,0.10)] transition-transform duration-700 ease-out hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1916] focus-visible:ring-offset-4 focus-visible:ring-offset-[#E7E4DD] md:p-4"
                 >
-                  <div className="relative overflow-hidden" style={{ aspectRatio: item.ratio }}>
+                  <div className="relative overflow-hidden" style={{ aspectRatio: '4 / 5' }}>
                     <div className="pointer-events-none absolute inset-0 z-10 ring-1 ring-inset ring-[#1A1916]/12" />
                     <img
                       src={item.src}
