@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Original (uncompressed) image backups — not committed
+public/Photos/_originals/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

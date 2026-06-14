@@ -495,15 +495,6 @@ const App = () => {
             <div className="flex flex-col items-center gap-16">
               <span className="text-[10px] font-bold text-red-500 uppercase tracking-[0.6em]">Quote</span>
               <div className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto px-6">
-                <div className="relative shrink-0">
-                  <img 
-                    src="/Photos/steve.jpeg" 
-                    className="w-32 h-32 rounded-full border-4 border-red-600/30 object-cover grayscale contrast-125 shadow-2xl" 
-                    alt="Steve Jobs"
-                    onError={(e) => e.target.src = "https://images.unsplash.com/photo-1554446422-d05db23719d2?auto=format&fit=crop&q=80&w=400"}
-                  />
-                  <div className="absolute inset-0 rounded-full border border-red-600 animate-pulse opacity-50"></div>
-                </div>
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
                   <h4 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[1.1] italic uppercase">
                     "Creativity is just <br className="hidden md:block" /> connecting things."
