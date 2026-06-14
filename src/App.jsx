@@ -6,20 +6,69 @@ import { Mail, Instagram, Menu, X, ArrowUpRight, ChevronLeft, ChevronRight } fro
  *  Images live in /public. Paths are relative to the site root.
  * ------------------------------------------------------------------ */
 
-const SERIES = {
-  id: 'series',
-  title: 'Dances of India',
-  place: 'Bengaluru',
-  statement:
-    'A study of classical and folk dance — the instant where a held pose becomes ' +
-    'motion. Shot across stages and rehearsal halls in Bengaluru.',
-  ratio: '3 / 4',
-  photos: [
-    { src: '/Photos/Dances Of India/dance1.JPG', alt: 'Indian classical dancer, Bengaluru' },
-    { src: '/Photos/Dances Of India/dance2.JPG', alt: 'Indian classical dancer, Bengaluru' },
-    { src: '/Photos/Dances Of India/dance3.JPG', alt: 'Indian classical dancer, Bengaluru' },
-  ],
-};
+/* Dances of India — a personal passion project. Each form maps to one photograph. */
+const DANCES = [
+  {
+    name: 'Bharatanatyam',
+    label: 'Classical Form · Tamil Nadu',
+    src: '/Photos/Dances Of India/dance1.JPG',
+    alt: 'Bharatanatyam dancer, Tamil Nadu',
+    body: (
+      <>
+        <p>
+          Originating within the ancient temples of Tamil Nadu, Bharatanatyam is considered
+          the &ldquo;fire dance,&rdquo; serving as a physical manifestation of devotion and
+          mythological storytelling.
+        </p>
+        <p>
+          It is defined by a brilliant synthesis of <em>Nritta</em> (complex, rhythmic
+          footwork and geometric postures) and <em>Nritya</em> (highly expressive narrative
+          sequences driven by intricate hand gestures or mudras).
+        </p>
+      </>
+    ),
+  },
+  {
+    name: 'Kathakali',
+    label: 'Classical Form · Kerala',
+    src: '/Photos/Dances Of India/dance2.JPG',
+    alt: 'Kathakali performer in green pacha makeup, Kerala',
+    body: (
+      <>
+        <p>
+          A mesmerizing classical dance-drama from the southwestern state of Kerala, renowned
+          worldwide for its striking, larger-than-life visual language.
+        </p>
+        <p>
+          Performers utilize a vivid array of highly stylized facial makeup&mdash;such as the
+          green &lsquo;pacha&rsquo; denoting noble heroes&mdash;combined with massive, ornate
+          headdresses. The narrative unfolds entirely in silence through incredibly precise
+          micro-movements of the eyes, eyebrows, and facial muscles.
+        </p>
+      </>
+    ),
+  },
+  {
+    name: 'Yakshagana',
+    label: 'Folk Theatre · Karnataka',
+    src: '/Photos/Dances Of India/dance3.JPG',
+    alt: 'Yakshagana performer in ornate headdress, Karnataka',
+    body: (
+      <>
+        <p>
+          A vibrant, open-air traditional theatre form rooted deeply in the coastal regions of
+          Karnataka. Unbound by the rigid strictures of classical dance, it celebrates
+          community, mythology, and raw energy.
+        </p>
+        <p>
+          Translating to &ldquo;songs of the demi-gods,&rdquo; it weaves thunderous drum beats,
+          acrobatic dance steps, and extempore, quick-witted dialogue. Performances traditionally
+          span from dusk to dawn, bringing Hindu epics to life under the open sky.
+        </p>
+      </>
+    ),
+  },
+];
 
 const SELECTED = {
   id: 'selected',
@@ -43,23 +92,23 @@ const PRINTS = {
     'hand-finished, signed, and shipped worldwide. Choose a frame, send a request, and ' +
     'I confirm size, finish, and shipping by email.',
   sizes: [
-    { size: 'A4 · 8×12″', price: '$45' },
-    { size: 'A3 · 12×18″', price: '$80' },
-    { size: 'A2 · 18×24″', price: '$130' },
-    { size: 'A1 · 24×36″', price: '$220' },
+    { size: 'A4 · 8×12″', price: '₹3,500' },
+    { size: 'A3 · 12×18″', price: '₹6,500' },
+    { size: 'A2 · 18×24″', price: '₹10,500' },
+    { size: 'A1 · 24×36″', price: '₹18,000' },
   ],
   items: [
-    { src: '/Photos/Dances Of India/dance2.JPG', title: 'Dances of India · II', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Indian classical dancer, Bengaluru' },
+    { src: '/Photos/Dances Of India/dance2.JPG', title: 'Kathakali', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Kathakali performer in green pacha makeup, Kerala' },
     { src: '/Photos/photo5.jpg', title: 'Selected · 05', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
     { src: '/Photos/photo2.jpg', title: 'Selected · 02', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/Dances Of India/dance1.JPG', title: 'Dances of India · I', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Indian classical dancer, Bengaluru' },
+    { src: '/Photos/Dances Of India/dance1.JPG', title: 'Bharatanatyam', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Bharatanatyam dancer, Tamil Nadu' },
     { src: '/Photos/photo4.jpg', title: 'Selected · 04', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
     { src: '/Photos/photo6.jpg', title: 'Selected · 06', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
   ],
 };
 
 const NAV = [
-  { id: 'series', label: 'Series' },
+  { id: 'series', label: 'Dances' },
   { id: 'selected', label: 'Selected' },
   { id: 'prints', label: 'Prints' },
   { id: 'about', label: 'About' },
@@ -299,36 +348,68 @@ const App = () => {
           </div>
         </section>
 
-        {/* ------------------------------------------------------ SERIES */}
-        <section
-          id="series"
-          className="mx-auto max-w-[1400px] scroll-mt-24 border-t border-[#1A1916]/10 px-6 py-24 md:px-10 md:py-32"
-        >
-          <div className="reveal grid gap-8 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-7">
-              <p className="font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F]">
-                Series 01 · {SERIES.place}
+        {/* ------------------------------------------------- DANCES OF INDIA */}
+        <section id="series" className="scroll-mt-24 border-t border-[#1A1916]/10">
+          {/* intro */}
+          <div className="mx-auto max-w-[1400px] px-6 pt-24 md:px-10 md:pt-32">
+            <div className="reveal grid gap-8 md:grid-cols-12 md:items-end">
+              <div className="md:col-span-7">
+                <p className="font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F]">
+                  My Passion Project
+                </p>
+                <h2 className="mt-4 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
+                  Dances of India
+                </h2>
+              </div>
+              <p className="font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/70 md:col-span-5">
+                An ongoing personal project documenting the classical and folk dance traditions of
+                India — chasing the instant a held pose becomes motion.
               </p>
-              <h2 className="mt-4 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
-                {SERIES.title}
-              </h2>
             </div>
-            <p className="font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/70 md:col-span-5">
-              {SERIES.statement}
-            </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-10 md:mt-20 md:grid-cols-3 md:gap-8">
-            {SERIES.photos.map((photo, i) => (
-              <div key={photo.src} style={{ transitionDelay: `${i * 90}ms` }} className="reveal">
-                <Print
-                  photo={photo}
-                  ratio={SERIES.ratio}
-                  label={`${SERIES.title} · ${SERIES.place}`}
-                  frame={frameNo(i)}
-                  onOpen={() => openLightbox(SERIES.photos, i, SERIES.title)}
-                />
-              </div>
+          {/* one full-width panel per dance form */}
+          <div className="mt-16 md:mt-24">
+            {DANCES.map((d) => (
+              <article
+                key={d.name}
+                className="grid items-stretch border-t border-[#1A1916]/10 lg:grid-cols-2"
+              >
+                {/* image (top on mobile, right on desktop) */}
+                <button
+                  type="button"
+                  aria-label={`Open ${d.name}`}
+                  onClick={() =>
+                    openLightbox(
+                      DANCES.map((x) => ({ src: x.src, alt: x.alt })),
+                      DANCES.indexOf(d),
+                      'Dances of India'
+                    )
+                  }
+                  className="group relative block min-h-[58vh] cursor-zoom-in overflow-hidden lg:order-2 lg:min-h-[86vh]"
+                >
+                  <img
+                    src={d.src}
+                    alt={d.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
+                  />
+                </button>
+
+                {/* text (bottom on mobile, left on desktop) */}
+                <div className="reveal flex flex-col justify-center px-6 py-16 md:px-12 md:py-24 lg:order-1 lg:px-16">
+                  <p className="font-mono-cap text-[11px] uppercase tracking-[0.32em] text-[#8C887F]">
+                    {d.label}
+                  </p>
+                  <h3 className="mt-7 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
+                    {d.name}
+                  </h3>
+                  <div className="mt-8 max-w-xl space-y-6 font-grotesk text-base leading-relaxed text-[#1A1916]/75 md:text-lg [&_em]:italic">
+                    {d.body}
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>
