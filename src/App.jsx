@@ -82,7 +82,7 @@ const SELECTED = {
     { src: '/Photos/Stories/cnk-northrenlights-4397.jpg', title: 'Under the Aurora', caption: 'A quiet moment beneath the northern lights.' },
     { src: '/Photos/Stories/ck-3.jpg', title: 'Around the Corner', caption: 'A street tabby keeps one eye on the world.' },
     { src: '/Photos/Stories/ck.jpg', title: 'Beach Cricket', caption: 'A young batsman at golden hour by the sea.' },
-    { src: '/Photos/Stories/kumbh-5.jpg', title: 'Ganga Aarti', caption: 'Evening prayer by the river at the Kumbh Mela.' },
+    { src: '/Photos/Stories/kumbh-5.jpg', title: 'Ganga Aarti', caption: 'Evening prayer by the river at the Ghats of Banaras.' },
     { src: '/Photos/Stories/dsc09735.jpg', title: 'Midstream', caption: 'A motorcycle rests in a forest creek.' },
     { src: '/Photos/Stories/fall-2.jpg', title: 'First Fall', caption: 'A lone oak leaf marks the turning season.' },
     { src: '/Photos/Stories/dsc06539.jpg', title: 'Hello There', caption: 'A curious duck leans in for a closer look.' },
