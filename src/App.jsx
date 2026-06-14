@@ -35,14 +35,47 @@ const SELECTED = {
   ],
 };
 
+/* Prints offered for sale. Edit titles, editions, sizes and prices freely. */
+const PRINTS = {
+  id: 'prints',
+  intro:
+    'Each photograph is available as an archival pigment print on cotton-rag paper — ' +
+    'hand-finished, signed, and shipped worldwide. Choose a frame, send a request, and ' +
+    'I confirm size, finish, and shipping by email.',
+  sizes: [
+    { size: 'A4 · 8×12″', price: '$45' },
+    { size: 'A3 · 12×18″', price: '$80' },
+    { size: 'A2 · 18×24″', price: '$130' },
+    { size: 'A1 · 24×36″', price: '$220' },
+  ],
+  items: [
+    { src: '/Photos/Dances Of India/dance2.JPG', title: 'Dances of India · II', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Indian classical dancer, Bengaluru' },
+    { src: '/Photos/photo5.jpg', title: 'Selected · 05', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
+    { src: '/Photos/photo2.jpg', title: 'Selected · 02', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
+    { src: '/Photos/Dances Of India/dance1.JPG', title: 'Dances of India · I', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Indian classical dancer, Bengaluru' },
+    { src: '/Photos/photo4.jpg', title: 'Selected · 04', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
+    { src: '/Photos/photo6.jpg', title: 'Selected · 06', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
+  ],
+};
+
 const NAV = [
   { id: 'series', label: 'Series' },
   { id: 'selected', label: 'Selected' },
+  { id: 'prints', label: 'Prints' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ];
 
 const frameNo = (i) => String(i + 1).padStart(2, '0');
+
+/* Pre-filled order email for a given print title. */
+const orderHref = (title) =>
+  'mailto:ckanakamurthy@gmail.com' +
+  `?subject=${encodeURIComponent(`Print order — ${title}`)}` +
+  `&body=${encodeURIComponent(
+    `Hi Chethan,\n\nI'd like to order a print of "${title}".\n\n` +
+    `Size:\nFinish (matte / luster):\nQuantity:\nShipping address:\n\nThank you!`
+  )}`;
 
 /* ------------------------------------------------------------------ */
 
@@ -324,6 +357,121 @@ const App = () => {
                   frame={frameNo(i)}
                   onOpen={() => openLightbox(SELECTED.photos, i, 'Selected')}
                 />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ------------------------------------------------------ PRINTS */}
+        <section
+          id="prints"
+          className="mx-auto max-w-[1400px] scroll-mt-24 border-t border-[#1A1916]/10 px-6 py-24 md:px-10 md:py-32"
+        >
+          <div className="reveal grid gap-8 md:grid-cols-12 md:items-end">
+            <div className="md:col-span-7">
+              <p className="font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F]">
+                For sale · Archival prints
+              </p>
+              <h2 className="mt-4 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
+                Prints
+              </h2>
+            </div>
+            <p className="font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/70 md:col-span-5">
+              {PRINTS.intro}
+            </p>
+          </div>
+
+          {/* size / price list */}
+          <dl className="reveal mt-14 grid grid-cols-2 border-t border-[#1A1916]/12 md:grid-cols-4">
+            {PRINTS.sizes.map((s, i) => (
+              <div
+                key={s.size}
+                className={`flex items-baseline justify-between gap-4 border-b border-[#1A1916]/10 py-5 md:px-6 ${
+                  i % 2 === 0 ? 'pr-4 md:pr-6' : 'pl-4 md:pl-0'
+                } ${i < PRINTS.sizes.length - 1 ? 'md:border-r md:border-[#1A1916]/10' : ''}`}
+              >
+                <dt className="font-mono-cap text-[10px] uppercase tracking-[0.22em] text-[#8C887F]">
+                  {s.size}
+                </dt>
+                <dd className="font-serif-display text-2xl font-light text-[#1A1916]">{s.price}</dd>
+              </div>
+            ))}
+          </dl>
+
+          {/* print grid */}
+          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-10">
+            {PRINTS.items.map((item, i) => (
+              <figure
+                key={item.src}
+                style={{ transitionDelay: `${(i % 3) * 90}ms` }}
+                className="reveal flex flex-col"
+              >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open ${item.title}`}
+                  onClick={() => openLightbox(PRINTS.items, i, 'Prints')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      openLightbox(PRINTS.items, i, 'Prints');
+                    }
+                  }}
+                  className="group block cursor-zoom-in bg-[#F4F2EC] p-3 shadow-[0_1px_3px_rgba(26,25,22,0.10)] transition-transform duration-700 ease-out hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1916] focus-visible:ring-offset-4 focus-visible:ring-offset-[#E7E4DD] md:p-4"
+                >
+                  <div className="relative overflow-hidden" style={{ aspectRatio: item.ratio }}>
+                    <div className="pointer-events-none absolute inset-0 z-10 ring-1 ring-inset ring-[#1A1916]/12" />
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.045]"
+                    />
+                  </div>
+                </div>
+
+                <figcaption className="mt-4 flex items-baseline justify-between font-mono-cap text-[10px] uppercase tracking-[0.28em] text-[#8C887F]">
+                  <span className="flex items-center gap-2">
+                    <span className="text-[#1A1916]/35" aria-hidden>✛</span>
+                    {item.title}
+                  </span>
+                  <span>{item.edition}</span>
+                </figcaption>
+
+                <div className="mt-4 flex items-center justify-between gap-4">
+                  <span className="font-serif-display text-lg font-light text-[#1A1916]">
+                    From {PRINTS.sizes[0].price}
+                  </span>
+                  <a
+                    href={orderHref(item.title)}
+                    className="group inline-flex items-center gap-2 bg-[#1A1916] px-6 py-3 font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#E7E4DD] transition-colors hover:bg-[#33302a]"
+                  >
+                    Order
+                    <ArrowUpRight
+                      size={13}
+                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </a>
+                </div>
+              </figure>
+            ))}
+          </div>
+
+          {/* assurances */}
+          <div className="reveal mt-20 grid gap-10 border-t border-[#1A1916]/10 pt-12 md:grid-cols-3">
+            {[
+              { label: 'Archival quality', text: 'Pigment inks on cotton-rag paper, rated to outlast a century without fading.' },
+              { label: 'Signed & numbered', text: 'Limited editions are signed and numbered by hand; open editions signed on the reverse.' },
+              { label: 'Shipped worldwide', text: 'Sent flat or rolled in protective packaging. Shipping is quoted by email per destination.' },
+            ].map((f) => (
+              <div key={f.label}>
+                <p className="font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#8C887F]">
+                  {f.label}
+                </p>
+                <p className="mt-4 font-serif-display text-lg font-light leading-relaxed text-[#1A1916]/75">
+                  {f.text}
+                </p>
               </div>
             ))}
           </div>
