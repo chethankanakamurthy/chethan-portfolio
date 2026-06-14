@@ -73,15 +73,35 @@ const DANCES = [
 const SELECTED = {
   id: 'selected',
   title: 'Every Picture Has a Story to Tell',
-  ratio: '4 / 5',
+  // Mixed orientations — rendered as a masonry grid so each frame keeps its shape.
   photos: [
-    { src: '/Photos/photo1.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo2.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo3.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo4.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo5.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo6.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
-  ],
+    { src: '/Photos/photo1.jpg', title: 'City Goose', caption: 'A Canada goose strolls the Chicago lakefront.' },
+    { src: '/Photos/Stories/ck-5-2.jpg', title: 'Theyyam', caption: 'A ritual dancer mid-invocation, North Kerala.' },
+    { src: '/Photos/Stories/ck-br-2827.jpg', title: 'The Hill Ahead', caption: 'A rider sizes up the climb over green paddy.' },
+    { src: '/Photos/photo3.jpg', title: 'Wonder', caption: 'A little one, wide-eyed at the world.' },
+    { src: '/Photos/Stories/cnk-northrenlights-4397.jpg', title: 'Under the Aurora', caption: 'A quiet moment beneath the northern lights.' },
+    { src: '/Photos/Stories/ck-3.jpg', title: 'Around the Corner', caption: 'A street tabby keeps one eye on the world.' },
+    { src: '/Photos/Stories/ck.jpg', title: 'Beach Cricket', caption: 'A young batsman at golden hour by the sea.' },
+    { src: '/Photos/Stories/kumbh-5.jpg', title: 'Ganga Aarti', caption: 'Evening prayer by the river at the Kumbh Mela.' },
+    { src: '/Photos/Stories/dsc09735.jpg', title: 'Midstream', caption: 'A motorcycle rests in a forest creek.' },
+    { src: '/Photos/Stories/fall-2.jpg', title: 'First Fall', caption: 'A lone oak leaf marks the turning season.' },
+    { src: '/Photos/Stories/dsc06539.jpg', title: 'Hello There', caption: 'A curious duck leans in for a closer look.' },
+    { src: '/Photos/Stories/ck-self-bnw-00940-2.jpg', title: 'Two in the Snow', caption: 'Figures cross a frozen field at first light.' },
+    { src: '/Photos/photo2.jpg', title: 'Trail Salute', caption: 'A rider throws up a hand on a forest trail.' },
+    { src: '/Photos/photo5.jpg', title: 'Before the Stage', caption: "A performer's gaze before the curtain rises." },
+    { src: '/Photos/Stories/dsc00115.jpg', title: 'Golden Hour', caption: 'A lone bicycle waits out the sunset by the water.' },
+    { src: '/Photos/Stories/kerala.jpg', title: 'Alley Cat', caption: 'A street cat in a sun-washed Kerala lane.' },
+    { src: '/Photos/Stories/dsc00283.jpg', title: 'Monsoon Joy', caption: 'Throwing up a wall of water on a rain-soaked trail.' },
+    { src: '/Photos/Stories/chicago-5.jpg', title: 'A Pair of Sparrows', caption: 'Two house sparrows pause on a granite ledge.' },
+    { src: '/Photos/Stories/dsc09788.jpg', title: 'Headlight in the Rain', caption: 'A beam cuts through a monsoon downpour.' },
+    { src: '/Photos/Stories/ck-self-bnw-00944.jpg', title: 'Winter Commute', caption: 'The road home through a Michigan snowfall.' },
+    { src: '/Photos/Stories/dsc09871.jpg', title: 'Riding the Rain', caption: 'Holding steady as the monsoon comes down.' },
+    { src: '/Photos/Stories/dsc09942.jpg', title: 'Old Friends', caption: 'A man and his dog pause on an autumn trail.' },
+    { src: '/Photos/Stories/dsc06608.jpg', title: 'Hill Station', caption: 'Taking in the tea-covered slopes of Munnar.' },
+    { src: '/Photos/photo6.jpg', title: 'Afternoon Nap', caption: 'A village dog dozes on a sun-warmed rock.' },
+    { src: '/Photos/Stories/ck-br-2918.jpg', title: 'Lakeside Halt', caption: 'Gloves on, ready to roll along the reservoir.' },
+    { src: '/Photos/photo4.jpg', title: 'The Demigod', caption: 'A Yakshagana artist in full regalia, Karnataka.' },
+  ].map((p) => ({ ...p, alt: p.caption })),
 };
 
 /* Prints offered for sale. Edit titles, editions, sizes and prices freely. */
@@ -362,17 +382,51 @@ const App = () => {
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-10">
+          {/* masonry — each frame keeps its natural orientation */}
+          <div className="mt-16 columns-1 [column-gap:2.5rem] sm:columns-2 md:mt-20 lg:columns-3">
             {SELECTED.photos.map((photo, i) => (
-              <div key={photo.src} style={{ transitionDelay: `${(i % 3) * 90}ms` }} className="reveal">
-                <Print
-                  photo={photo}
-                  ratio={SELECTED.ratio}
-                  label="Story"
-                  frame={frameNo(i)}
-                  onOpen={() => openLightbox(SELECTED.photos, i, 'Story')}
-                />
-              </div>
+              <figure
+                key={photo.src}
+                style={{ transitionDelay: `${(i % 3) * 90}ms` }}
+                className="reveal mb-10 break-inside-avoid"
+              >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open ${photo.title}`}
+                  onClick={() => openLightbox(SELECTED.photos, i, 'Story')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      openLightbox(SELECTED.photos, i, 'Story');
+                    }
+                  }}
+                  className="group block cursor-zoom-in bg-[#F4F2EC] p-3 shadow-[0_1px_3px_rgba(26,25,22,0.10)] transition-transform duration-700 ease-out hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1916] focus-visible:ring-offset-4 focus-visible:ring-offset-[#E7E4DD] md:p-4"
+                >
+                  <div className="relative overflow-hidden">
+                    <div className="pointer-events-none absolute inset-0 z-10 ring-1 ring-inset ring-[#1A1916]/12" />
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.045]"
+                    />
+                  </div>
+                </div>
+                <figcaption className="mt-4">
+                  <div className="flex items-baseline justify-between gap-3 font-mono-cap text-[10px] uppercase tracking-[0.28em] text-[#8C887F]">
+                    <span className="flex items-center gap-2">
+                      <span className="text-[#1A1916]/35" aria-hidden>✛</span>
+                      {photo.title}
+                    </span>
+                    <span>{frameNo(i)}</span>
+                  </div>
+                  <p className="mt-2 font-serif-display text-[15px] font-light italic leading-snug text-[#1A1916]/70">
+                    {photo.caption}
+                  </p>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </section>
