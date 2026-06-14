@@ -465,9 +465,9 @@ const App = () => {
             {PRINTS.sizes.map((s, i) => (
               <div
                 key={s.size}
-                className={`flex items-baseline justify-between gap-4 border-b border-[#1A1916]/10 py-5 md:px-6 ${
-                  i % 2 === 0 ? 'pr-4 md:pr-6' : 'pl-4 md:pl-0'
-                } ${i < PRINTS.sizes.length - 1 ? 'md:border-r md:border-[#1A1916]/10' : ''}`}
+                className={`flex items-baseline justify-between gap-4 border-b border-[#1A1916]/10 px-4 py-5 md:px-6 ${
+                  i < PRINTS.sizes.length - 1 ? 'md:border-r md:border-[#1A1916]/10' : ''
+                }`}
               >
                 <dt className="font-mono-cap text-[10px] uppercase tracking-[0.22em] text-[#8C887F]">
                   {s.size}
