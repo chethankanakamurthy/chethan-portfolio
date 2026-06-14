@@ -118,12 +118,12 @@ const PRINTS = {
     { size: 'A1 · 24×36″', price: '₹18,000' },
   ],
   items: [
-    { src: '/Photos/Dances Of India/dance2.JPG', title: 'Kathakali', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Kathakali performer in green pacha makeup, Kerala' },
-    { src: '/Photos/photo5.jpg', title: 'Selected · 05', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo2.jpg', title: 'Selected · 02', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/Dances Of India/dance1.JPG', title: 'Bharatanatyam', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Bharatanatyam dancer, Tamil Nadu' },
-    { src: '/Photos/photo4.jpg', title: 'Selected · 04', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
-    { src: '/Photos/photo6.jpg', title: 'Selected · 06', edition: 'Open edition', ratio: '4 / 5', alt: 'Photograph by Chethan Kanakamurthy' },
+    { src: '/Photos/Dances Of India/dance2.JPG', title: 'Kathakali', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Kathakali performer in green pacha makeup, Kerala', caption: "Bring the drama of Kerala's stage to your wall." },
+    { src: '/Photos/photo5.jpg', title: 'Before the Stage', edition: 'Open edition', ratio: '4 / 5', alt: "A performer's gaze before the curtain rises", caption: 'Timeless black & white to anchor any room.' },
+    { src: '/Photos/Stories/cnk-northrenlights-4397.jpg', title: 'Under the Aurora', edition: 'Edition of 25', ratio: '4 / 5', alt: 'A quiet moment beneath the northern lights', caption: 'Hang a piece of the night sky above your sofa.' },
+    { src: '/Photos/Dances Of India/dance1.JPG', title: 'Bharatanatyam', edition: 'Edition of 25', ratio: '3 / 4', alt: 'Bharatanatyam dancer, Tamil Nadu', caption: 'Grace and tradition, framed for your home.' },
+    { src: '/Photos/photo4.jpg', title: 'The Demigod', edition: 'Open edition', ratio: '4 / 5', alt: 'A Yakshagana artist in full regalia, Karnataka', caption: 'Folklore and colour that command a room.' },
+    { src: '/Photos/photo6.jpg', title: 'Afternoon Nap', edition: 'Open edition', ratio: '4 / 5', alt: 'A village dog dozes on a sun-warmed rock', caption: 'A calm, soulful frame for quiet corners.' },
   ],
 };
 
@@ -574,7 +574,11 @@ const App = () => {
                   <span>{item.edition}</span>
                 </figcaption>
 
-                <div className="mt-4 flex items-center justify-between gap-4">
+                <p className="mt-2 font-serif-display text-[15px] font-light italic leading-snug text-[#1A1916]/70">
+                  {item.caption}
+                </p>
+
+                <div className="mt-auto flex items-center justify-between gap-4 pt-4">
                   <span className="font-serif-display text-lg font-light text-[#1A1916]">
                     From {PRINTS.sizes[0].price}
                   </span>
