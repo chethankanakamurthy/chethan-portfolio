@@ -357,12 +357,14 @@ const App = () => {
             {/* lead frame */}
             <div className="reveal lg:col-span-4" style={{ transitionDelay: '160ms' }}>
               <Print
-                photo={SELECTED.photos[0]}
+                photo={{ src: '/Photos/lead.jpg', alt: 'Self-portrait — Chethan Kanakamurthy' }}
                 ratio="3 / 4"
-                label="Lead"
+                label="Self-portrait"
                 frame="01"
                 priority
-                onOpen={() => openLightbox(SELECTED.photos, 0, 'Story')}
+                onOpen={() =>
+                  openLightbox([{ src: '/Photos/lead.jpg', alt: 'Self-portrait — Chethan Kanakamurthy' }], 0, 'Self-portrait')
+                }
               />
             </div>
           </div>
