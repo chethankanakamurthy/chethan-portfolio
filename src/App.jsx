@@ -72,7 +72,7 @@ const DANCES = [
 
 const SELECTED = {
   id: 'selected',
-  title: 'Selected Frames',
+  title: 'Every Picture Has a Story to Tell',
   ratio: '4 / 5',
   photos: [
     { src: '/Photos/photo1.jpg', alt: 'Photograph by Chethan Kanakamurthy' },
@@ -108,8 +108,8 @@ const PRINTS = {
 };
 
 const NAV = [
+  { id: 'selected', label: 'Stories' },
   { id: 'series', label: 'Dances' },
-  { id: 'selected', label: 'Selected' },
   { id: 'prints', label: 'Prints' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
@@ -342,9 +342,38 @@ const App = () => {
                 label="Lead"
                 frame="01"
                 priority
-                onOpen={() => openLightbox(SELECTED.photos, 0, 'Selected')}
+                onOpen={() => openLightbox(SELECTED.photos, 0, 'Story')}
               />
             </div>
+          </div>
+        </section>
+
+        {/* --------------------------------- EVERY PICTURE HAS A STORY */}
+        <section
+          id="selected"
+          className="mx-auto max-w-[1400px] scroll-mt-24 border-t border-[#1A1916]/10 px-6 py-24 md:px-10 md:py-32"
+        >
+          <div className="reveal flex items-end justify-between gap-8">
+            <h2 className="max-w-[18ch] font-serif-display text-4xl font-light leading-[1.05] tracking-[-0.02em] text-[#1A1916] md:text-6xl lg:text-7xl">
+              {SELECTED.title}
+            </h2>
+            <p className="hidden shrink-0 font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F] md:block">
+              {String(SELECTED.photos.length).padStart(2, '0')} frames
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-10">
+            {SELECTED.photos.map((photo, i) => (
+              <div key={photo.src} style={{ transitionDelay: `${(i % 3) * 90}ms` }} className="reveal">
+                <Print
+                  photo={photo}
+                  ratio={SELECTED.ratio}
+                  label="Story"
+                  frame={frameNo(i)}
+                  onOpen={() => openLightbox(SELECTED.photos, i, 'Story')}
+                />
+              </div>
+            ))}
           </div>
         </section>
 
@@ -408,35 +437,6 @@ const App = () => {
                   </div>
                 </div>
               </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ---------------------------------------------------- SELECTED */}
-        <section
-          id="selected"
-          className="mx-auto max-w-[1400px] scroll-mt-24 border-t border-[#1A1916]/10 px-6 py-24 md:px-10 md:py-32"
-        >
-          <div className="reveal flex items-end justify-between">
-            <h2 className="font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
-              {SELECTED.title}
-            </h2>
-            <p className="hidden font-mono-cap text-[11px] uppercase tracking-[0.35em] text-[#8C887F] md:block">
-              {String(SELECTED.photos.length).padStart(2, '0')} frames
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-10">
-            {SELECTED.photos.map((photo, i) => (
-              <div key={photo.src} style={{ transitionDelay: `${(i % 3) * 90}ms` }} className="reveal">
-                <Print
-                  photo={photo}
-                  ratio={SELECTED.ratio}
-                  label="Selected"
-                  frame={frameNo(i)}
-                  onOpen={() => openLightbox(SELECTED.photos, i, 'Selected')}
-                />
-              </div>
             ))}
           </div>
         </section>
