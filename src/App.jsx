@@ -11,8 +11,9 @@ const DANCES = [
   {
     name: 'Bharatanatyam',
     label: 'Classical Form · Tamil Nadu',
-    src: '/Photos/Dances Of India/dance1.JPG',
-    alt: 'Bharatanatyam dancer, Tamil Nadu',
+    src: '/Photos/Dances Of India/vaishu-yatra.jpg',
+    alt: 'Bharatanatyam dancer Vaishnavi Jayaram, Tamil Nadu',
+    artist: 'Vaishnavi Jayaram',
     body: (
       <>
         <p>
@@ -491,6 +492,16 @@ const App = () => {
                   <div className="mt-8 max-w-xl space-y-6 font-grotesk text-base leading-relaxed text-[#1A1916]/75 md:text-lg [&_em]:italic">
                     {d.body}
                   </div>
+                  {d.artist && (
+                    <div className="mt-10 max-w-xl border-t border-[#1A1916]/10 pt-6">
+                      <p className="font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#8C887F]">
+                        Dancer
+                      </p>
+                      <p className="mt-2 font-serif-display text-xl font-light text-[#1A1916]">
+                        {d.artist}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </article>
             ))}
