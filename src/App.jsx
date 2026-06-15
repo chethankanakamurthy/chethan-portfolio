@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Mail, Instagram, Menu, X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Mail, Instagram, Menu, X, ArrowUpRight, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 
 /* ------------------------------------------------------------------ *
  *  PHOTOGRAPHY CONTENT
@@ -69,7 +69,92 @@ const DANCES = [
       </>
     ),
   },
+  {
+    name: 'Bhoota Kola',
+    label: 'Ritual Theatre · Tulu Nadu',
+    src: '/Photos/Dances Of India/Kola/ck-5-2.jpg',
+    alt: 'Bhoota Kola performer in ritual costume, coastal Karnataka',
+    body: (
+      <>
+        <p>
+          A night-long ritual of spirit worship from Tulu Nadu, the coastal belt of Karnataka,
+          in which a single performer becomes the vessel for a <em>daiva</em> &mdash; a local
+          guardian deity invoked to protect and bless the village.
+        </p>
+        <p>
+          Lit by torches and oil lamps, the dancer takes on vivid facial painting, towering
+          ornaments and a skirt of tender palm frond, building through drumbeat and chant into a
+          trance from which the deity speaks &mdash; settling disputes and granting oracles.
+        </p>
+      </>
+    ),
+  },
 ];
+
+/* Per-dance "see more" galleries, imported from CK Personal/Classical. */
+const GALLERIES = {
+  Bharatanatyam: [
+    '/Photos/Dances Of India/Bharatanatyam/ck-5.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/ck.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04680.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04714.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04725.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04739.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04743.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04756.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04829.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04840.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04867.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc04952.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05022.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05036.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05058.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05094.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05132.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05156.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05230.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05254.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05305.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05376.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05494.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc05555.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc07752-2.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/dsc08055-2.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-2.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-3.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-4.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-5.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-6.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa-7.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/mansa.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/vaish-3.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/vaishu-yatra-2.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/vaishu-yatra-3.jpg',
+    '/Photos/Dances Of India/Bharatanatyam/vaishu-yatra-3-glow.jpg',
+  ],
+  Kathakali: [
+    '/Photos/Dances Of India/Kathakali/dsc06852.jpg',
+    '/Photos/Dances Of India/Kathakali/dsc06876-2.jpg',
+    '/Photos/Dances Of India/Kathakali/dsc06884.jpg',
+    '/Photos/Dances Of India/Kathakali/dsc06966.jpg',
+    '/Photos/Dances Of India/Kathakali/dsc06985.jpg',
+    '/Photos/Dances Of India/Kathakali/dsc07000.jpg',
+    '/Photos/Dances Of India/Kathakali/img-0467.jpg',
+    '/Photos/Dances Of India/Kathakali/img-1025.jpg',
+  ],
+  Yakshagana: [
+    '/Photos/Dances Of India/Yakshagana/yakshaghana-2.jpg',
+    '/Photos/Dances Of India/Yakshagana/yakshaghana-3.jpg',
+    '/Photos/Dances Of India/Yakshagana/yakshaghana-4.jpg',
+    '/Photos/Dances Of India/Yakshagana/yakshaghana-6.jpg',
+    '/Photos/Dances Of India/Yakshagana/yakshaghana-7.jpg',
+  ],
+  'Bhoota Kola': [
+    '/Photos/Dances Of India/Kola/dsc01170.jpg',
+    '/Photos/Dances Of India/Kola/kola.jpg',
+    '/Photos/Dances Of India/Kola/vaish.jpg',
+  ],
+};
 
 const SELECTED = {
   id: 'selected',
@@ -153,6 +238,8 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // lightbox = { list: [photos], index, label } | null
   const [lightbox, setLightbox] = useState(null);
+  // name of the dance whose "see more" gallery is open, or null
+  const [openDance, setOpenDance] = useState(null);
 
   /* scroll reveal */
   useEffect(() => {
@@ -454,57 +541,107 @@ const App = () => {
 
           {/* one full-width panel per dance form */}
           <div className="mt-16 md:mt-24">
-            {DANCES.map((d) => (
-              <article
-                key={d.name}
-                className="grid items-stretch border-t border-[#1A1916]/10 lg:grid-cols-2"
-              >
-                {/* image (top on mobile, right on desktop) */}
-                <button
-                  type="button"
-                  aria-label={`Open ${d.name}`}
-                  onClick={() =>
-                    openLightbox(
-                      DANCES.map((x) => ({ src: x.src, alt: x.alt })),
-                      DANCES.indexOf(d),
-                      'Dances of India'
-                    )
-                  }
-                  className="group relative block min-h-[58vh] cursor-zoom-in overflow-hidden lg:order-2 lg:min-h-[86vh]"
-                >
-                  <img
-                    src={d.src}
-                    alt={d.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
-                  />
-                </button>
+            {DANCES.map((d) => {
+              const gallery = GALLERIES[d.name] || [];
+              const isOpen = openDance === d.name;
+              return (
+                <div key={d.name} className="border-t border-[#1A1916]/10">
+                  <article className="grid items-stretch lg:grid-cols-2">
+                    {/* image (top on mobile, right on desktop) */}
+                    <button
+                      type="button"
+                      aria-label={`Open ${d.name}`}
+                      onClick={() =>
+                        openLightbox(
+                          DANCES.map((x) => ({ src: x.src, alt: x.alt })),
+                          DANCES.indexOf(d),
+                          'Dances of India'
+                        )
+                      }
+                      className="group relative block min-h-[58vh] cursor-zoom-in overflow-hidden lg:order-2 lg:min-h-[86vh]"
+                    >
+                      <img
+                        src={d.src}
+                        alt={d.alt}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
+                      />
+                    </button>
 
-                {/* text (bottom on mobile, left on desktop) */}
-                <div className="reveal flex flex-col justify-center px-6 py-16 md:px-12 md:py-24 lg:order-1 lg:px-16">
-                  <p className="font-mono-cap text-[11px] uppercase tracking-[0.32em] text-[#8C887F]">
-                    {d.label}
-                  </p>
-                  <h3 className="mt-7 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
-                    {d.name}
-                  </h3>
-                  <div className="mt-8 max-w-xl space-y-6 font-grotesk text-base leading-relaxed text-[#1A1916]/75 md:text-lg [&_em]:italic">
-                    {d.body}
-                  </div>
-                  {d.artist && (
-                    <div className="mt-10 max-w-xl border-t border-[#1A1916]/10 pt-6">
-                      <p className="font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#8C887F]">
-                        Dancer
+                    {/* text (bottom on mobile, left on desktop) */}
+                    <div className="reveal flex flex-col justify-center px-6 py-16 md:px-12 md:py-24 lg:order-1 lg:px-16">
+                      <p className="font-mono-cap text-[11px] uppercase tracking-[0.32em] text-[#8C887F]">
+                        {d.label}
                       </p>
-                      <p className="mt-2 font-serif-display text-xl font-light text-[#1A1916]">
-                        {d.artist}
-                      </p>
+                      <h3 className="mt-7 font-serif-display text-5xl font-light tracking-[-0.02em] text-[#1A1916] md:text-7xl">
+                        {d.name}
+                      </h3>
+                      <div className="mt-8 max-w-xl space-y-6 font-grotesk text-base leading-relaxed text-[#1A1916]/75 md:text-lg [&_em]:italic">
+                        {d.body}
+                      </div>
+                      {d.artist && (
+                        <div className="mt-10 max-w-xl border-t border-[#1A1916]/10 pt-6">
+                          <p className="font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#8C887F]">
+                            Dancer
+                          </p>
+                          <p className="mt-2 font-serif-display text-xl font-light text-[#1A1916]">
+                            {d.artist}
+                          </p>
+                        </div>
+                      )}
+                      {gallery.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setOpenDance(isOpen ? null : d.name)}
+                          className="mt-10 inline-flex w-fit items-center gap-3 border border-[#1A1916]/25 px-7 py-3 font-mono-cap text-[10px] uppercase tracking-[0.3em] text-[#1A1916] transition-colors hover:bg-[#1A1916] hover:text-[#E7E4DD]"
+                        >
+                          {isOpen ? 'Show less' : `See more — ${gallery.length} photos`}
+                          <ChevronDown
+                            size={14}
+                            className={`transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </article>
+
+                  {/* expandable "see more" gallery */}
+                  {isOpen && gallery.length > 0 && (
+                    <div className="lb-fade px-6 pb-20 md:px-10 md:pb-28">
+                      <div className="columns-2 [column-gap:1rem] sm:columns-3 lg:columns-4">
+                        {gallery.map((src, gi) => (
+                          <button
+                            key={src}
+                            type="button"
+                            aria-label={`Open ${d.name} photo ${gi + 1}`}
+                            onClick={() =>
+                              openLightbox(
+                                gallery.map((s, j) => ({
+                                  src: s,
+                                  alt: `${d.name} — ${String(j + 1).padStart(2, '0')}`,
+                                })),
+                                gi,
+                                d.name
+                              )
+                            }
+                            className="group mb-4 block w-full cursor-zoom-in overflow-hidden break-inside-avoid bg-[#F4F2EC] p-2 shadow-[0_1px_3px_rgba(26,25,22,0.10)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1916] focus-visible:ring-offset-2 focus-visible:ring-offset-[#E7E4DD]"
+                          >
+                            <img
+                              src={src}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              className="block h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                            />
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
-              </article>
-            ))}
+              );
+            })}
           </div>
         </section>
 
