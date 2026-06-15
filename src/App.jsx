@@ -74,6 +74,7 @@ const DANCES = [
     label: 'Ritual Theatre · Tulu Nadu',
     src: '/Photos/Dances Of India/Kola/ck-5-2.jpg',
     alt: 'Bhoota Kola performer in ritual costume, coastal Karnataka',
+    pos: 'center top',
     body: (
       <>
         <p>
@@ -565,6 +566,7 @@ const App = () => {
                         alt={d.alt}
                         loading="lazy"
                         decoding="async"
+                        style={{ objectPosition: d.pos || 'center' }}
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
                       />
                     </button>
